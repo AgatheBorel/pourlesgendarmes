@@ -1,0 +1,66 @@
+# Configuration de l'interface d'édition Pages CMS (https://pagescms.org).
+# Elle permet d'écrire les articles dans un formulaire, sans toucher au code.
+media:
+  input: public/images/articles
+  output: /images/articles
+
+content:
+  - name: articles
+    label: Articles
+    type: collection
+    path: src/content/articles
+    filename: "{primary}.md"
+    view:
+      fields: [title, rubrique, date, brouillon]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: Titre (60 à 70 caractères idéalement, 90 maximum)
+        type: string
+        required: true
+      - name: description
+        label: Description affichée dans Google (entre 70 et 170 caractères)
+        type: text
+        required: true
+      - name: date
+        label: Date de publication (une date future programme la publication)
+        type: date
+        required: true
+      - name: maj
+        label: Date de mise à jour (si l'article est révisé)
+        type: date
+      - name: rubrique
+        label: Rubrique
+        type: select
+        required: true
+        options:
+          values: [mutation, logement, demenagement, famille, outre-mer, carriere]
+      - name: motCle
+        label: Mot-clé principal visé
+        type: string
+      - name: chapo
+        label: Chapô (introduction de 2 ou 3 phrases)
+        type: text
+      - name: brouillon
+        label: Brouillon (non publié tant que la case est cochée)
+        type: boolean
+        default: true
+      - name: faq
+        label: Questions fréquentes (affichées en bas de l'article et lues par Google)
+        type: object
+        list: true
+        fields:
+          - { name: q, label: Question, type: string }
+          - { name: r, label: Réponse, type: text }
+      - name: sources
+        label: Sources officielles (liens vérifiés uniquement)
+        type: object
+        list: true
+        fields:
+          - { name: titre, label: Titre de la source, type: string }
+          - { name: url, label: Adresse (https://…), type: string }
+      - name: body
+        label: Contenu de l'article
+        type: rich-text
