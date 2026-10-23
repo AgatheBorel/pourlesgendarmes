@@ -1,0 +1,72 @@
+---
+import Article from '../layouts/Article.astro';
+import BlocDevis from '../components/BlocDevis.astro';
+const toc = [
+  { id: 'calendrier', label: 'Le bon ordre' },
+  { id: 'enfants', label: 'Les enfants : école, crèche' },
+  { id: 'conjoint', label: 'Le conjoint' },
+  { id: 'administratif', label: 'Les démarches administratives' },
+  { id: 'sante', label: 'La santé' },
+  { id: 'vie-quotidienne', label: 'La vie quotidienne' },
+  { id: 'jour-j', label: 'Le jour du déménagement' },
+];
+const schema = { '@context': 'https://schema.org', '@type': 'Article', headline: 'Mutation en famille : les démarches à ne pas oublier', inLanguage: 'fr-FR', dateModified: '2026-10-19' };
+---
+<Article title="Mutation en famille : les démarches pour le conjoint et les enfants"
+         h1="Muter en famille : les démarches à ne pas oublier"
+         description="École, crèche, emploi du conjoint, CAF, carte grise, médecin : la liste des démarches pour réussir une mutation de gendarme en famille, dans le bon ordre."
+         chapo="Une mutation concerne toute la famille. Voici les démarches à prévoir pour les enfants, le conjoint et la vie quotidienne, dans l’ordre où les faire."
+         maj="19 octobre 2026" toc={toc} rubrique={{ label: 'Guides', href: '/#situations-titre' }} schema={schema}>
+
+  <h2 id="calendrier">Le bon ordre</h2>
+  <ol>
+    <li><strong>Dès la mutation connue</strong>&nbsp;: école et crèche, recherche d’emploi du conjoint, devis de déménagement.</li>
+    <li><strong>Un mois avant</strong>&nbsp;: résiliations et transferts de contrats, suivi de courrier.</li>
+    <li><strong>Après l’arrivée</strong>&nbsp;: changements d’adresse, carte grise, médecin traitant.</li>
+  </ol>
+  <p>Le <a href="/#planif-titre">rétroplanning</a> de l’accueil calcule ces dates à partir de votre prise de poste.</p>
+
+  <h2 id="enfants">Les enfants&nbsp;: école, collège, crèche</h2>
+  <ul>
+    <li><strong>École maternelle et élémentaire</strong>&nbsp;: demandez un certificat de radiation à l’école actuelle, puis inscrivez votre enfant auprès de la mairie de votre nouvelle commune, qui vous indique l’école.</li>
+    <li><strong>Collège et lycée</strong>&nbsp;: prévenez l’établissement actuel et contactez les services départementaux de l’Éducation nationale du nouveau département pour l’affectation.</li>
+    <li><strong>Crèche et assistante maternelle</strong>&nbsp;: les places sont rares, faites les demandes dès que possible. Le relais petite enfance de la nouvelle commune peut vous orienter.</li>
+    <li><strong>Activités</strong>&nbsp;: récupérez les licences sportives et dossiers d’inscription pour faciliter le transfert.</li>
+  </ul>
+
+  <h2 id="conjoint">Le conjoint</h2>
+  <ul>
+    <li>Prévenez l’employeur actuel et respectez le préavis de démission ou demandez une mutation si l’employeur a des implantations dans la nouvelle région.</li>
+    <li>Fonctionnaire&nbsp;: renseignez-vous sur les possibilités de mutation ou de rapprochement de conjoint auprès de votre administration.</li>
+    <li>En recherche d’emploi&nbsp;: signalez votre changement d’adresse à France Travail pour être suivi par l’agence de votre nouveau domicile.</li>
+  </ul>
+
+  <BlocDevis titre="Un déménagement en famille à organiser ?" texte="Décrivez-nous votre logement et vos dates : un conseiller vous rappelle et prépare votre devis avec vous." />
+
+  <h2 id="administratif">Les démarches administratives</h2>
+  <ul>
+    <li><strong>Changement d’adresse groupé</strong>&nbsp;: le service en ligne de Service-Public.fr permet de prévenir plusieurs organismes en une fois (caisse d’allocations familiales, assurance maladie, impôts, fournisseurs d’énergie…).</li>
+    <li><strong>Carte grise</strong>&nbsp;: la modification d’adresse se fait en ligne, sur le site de l’ANTS, dans le mois qui suit le déménagement. Elle est gratuite.</li>
+    <li><strong>Liste électorale</strong>&nbsp;: inscrivez-vous dans votre nouvelle commune.</li>
+    <li><strong>Banque et assurances</strong>&nbsp;: communiquez votre nouvelle adresse et adaptez l’assurance habitation.</li>
+  </ul>
+
+  <h2 id="sante">La santé</h2>
+  <ul>
+    <li>Récupérez les dossiers médicaux utiles et les ordonnances en cours.</li>
+    <li>Choisissez un nouveau médecin traitant après l’arrivée et déclarez-le à l’assurance maladie.</li>
+    <li>Pensez aux suivis réguliers des enfants et aux rendez-vous déjà pris à annuler.</li>
+  </ul>
+
+  <h2 id="vie-quotidienne">La vie quotidienne</h2>
+  <ul>
+    <li><strong>Courrier</strong>&nbsp;: activez un suivi de courrier pour ne rien perdre pendant la transition.</li>
+    <li><strong>Animaux</strong>&nbsp;: prévoyez leur transport, qui ne se fait pas dans le camion, et mettez à jour l’adresse liée à leur identification.</li>
+    <li><strong>Internet</strong>&nbsp;: vérifiez l’éligibilité de la nouvelle adresse et demandez le transfert tôt, les délais peuvent être longs.</li>
+  </ul>
+
+  <h2 id="jour-j">Le jour du déménagement</h2>
+  <p>Si possible, faites garder les jeunes enfants&nbsp;: la journée est longue et l’attention doit aller aux déménageurs. Préparez pour chacun un sac avec ce qui est indispensable pour les premiers jours&nbsp;: vêtements, doudou, jeux, papiers.</p>
+
+  <BlocDevis />
+</Article>

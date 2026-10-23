@@ -1,0 +1,17 @@
+---
+import ListeArticles from '../../../components/ListeArticles.astro';
+import { rubriques } from '../../../content.config';
+import { articlesPublies } from '../../../lib/articles';
+export async function getStaticPaths() {
+  const tous = await articlesPublies();
+  return Object.entries(rubriques).map(([cle, label]) => ({
+    params: { rubrique: cle },
+    props: { label, cle, articles: tous.filter((a) => a.data.rubrique === cle) },
+  }));
+}
+const { label, cle, articles } = Astro.props;
+---
+<ListeArticles titre={`${label} : articles pour les gendarmes`}
+  intro={`Tous nos articles de la rubrique ${label.toLowerCase()}.`}
+  description={`Articles pratiques pour les gendarmes mutés, rubrique ${label.toLowerCase()} : conseils, démarches et repères.`}
+  articles={articles} actif={cle} />

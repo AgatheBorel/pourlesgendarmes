@@ -1,0 +1,29 @@
+---
+import Article from '../layouts/Article.astro';
+import { site } from '../data/site';
+const e = site.editor;
+---
+<Article title="Données personnelles" h1="Vos données personnelles" maj="19 octobre 2026" noindex>
+  <p class="a-completer">Modèle à faire valider par votre DPO ou votre conseil juridique avant mise en ligne.</p>
+
+  <h2>Qui traite vos données</h2>
+  <p>Le responsable du traitement des données collectées sur {site.domain} est l’éditeur du site, identifié dans les <a href="/mentions-legales/">mentions légales</a>. Contact : {e.dpoEmail}.</p>
+
+  <h2>Quelles données, et pourquoi</h2>
+  <p>Lorsque vous faites une demande de devis, nous collectons : votre nom, prénom, téléphone, e-mail, le mois et les codes postaux de votre déménagement, le type et la taille de votre logement, et les précisions que vous ajoutez.</p>
+  <p>Ces données servent uniquement à vous recontacter, établir votre devis et assurer le suivi de votre demande. La base légale est votre consentement, que vous donnez en cochant la case du formulaire.</p>
+  <p>Nous ne vous demandons aucune information sur votre unité ou votre service, et nous vous invitons à ne pas en indiquer.</p>
+
+  <h2>Qui y a accès</h2>
+  <p>Uniquement les équipes de l’éditeur chargées de votre demande, et nos sous-traitants techniques (hébergement du site et messagerie électronique), dans l'Union européenne. Vos données ne sont ni vendues ni cédées.</p>
+
+  <h2>Combien de temps</h2>
+  <p>Une copie technique de votre demande est conservée 30 jours sur le serveur du site, puis supprimée automatiquement.</p>
+  <p class="a-completer">Dans nos outils commerciaux : [DURÉE] à compter de votre dernier contact si aucun devis n'est signé. En cas de prestation, les durées légales de conservation des documents commerciaux s'appliquent.</p>
+
+  <h2>Vos droits</h2>
+  <p>Vous pouvez à tout moment accéder à vos données, les rectifier, les effacer, retirer votre consentement, vous opposer au traitement ou en demander la portabilité, en écrivant à {e.dpoEmail}. Vous pouvez aussi adresser une réclamation à la CNIL (cnil.fr).</p>
+
+  <h2>Cookies et mesure d'audience</h2>
+  <p>Ce site ne dépose aucun cookie publicitaire et n'utilise pas de service tiers pour ses polices de caractères. <span class="a-completer">À mettre à jour si un outil de mesure d'audience est ajouté.</span></p>
+</Article>

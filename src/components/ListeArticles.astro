@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import CarteArticle from './CarteArticle.astro';
+import { rubriques } from '../content.config';
+import { articlesPublies, type ArticleEntry } from '../lib/articles';
+interface Props { titre: string; intro: string; description: string; articles: ArticleEntry[]; actif?: string; }
+const { titre, intro, description, articles, actif } = Astro.props;
+const tous = await articlesPublies();
+// Seules les rubriques qui contiennent au moins un article sont proposées.
+const presentes = Object.entries(rubriques).filter(([cle]) => tous.some((a) => a.data.rubrique === cle));
+---
+<Base title={titre} description={description} noindex={articles.length === 0}>
+  <div class="conteneur liste">
+    <nav class="fil" aria-label="Fil d'Ariane"><a href="/">Accueil</a>{actif && <><span aria-hidden="true">/</span><a href="/articles/">Articles</a></>}</nav>
+    <h1>{titre}</h1>
+    <p class="intro">{intro}</p>
+    <nav class="filtres" aria-label="Rubriques">
+      <a href="/articles/" aria-current={!actif ? 'page' : undefined}>Tous</a>
+      {presentes.map(([cle, label]) => <a href={`/articles/rubrique/${cle}/`} aria-current={actif === cle ? 'page' : undefined}>{label}</a>)}
+    </nav>
+    {articles.length > 0
+      ? <div class="grille">{articles.map((a) => <CarteArticle article={a} titreNiveau="h2" />)}</div>
+      : <p class="vide">Aucun article dans cette rubrique pour l’instant. Consultez <a href="/articles/">tous les articles</a> ou les <a href="/guide-mutation/">guides pratiques</a>.</p>}
+  </div>
+</Base>
+<style>
+  .liste { padding-block: clamp(1.5rem, 4vw, 3rem); }
+  .fil { display: flex; gap: .5rem; font-size: .92rem; color: var(--encre-douce); margin-bottom: 1.2rem; }
+  .fil a { color: var(--encre-douce); }
+  .intro { font-family: var(--f-lecture); font-size: 1.2rem; color: var(--encre-douce); max-width: 60ch; }
+  .filtres { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.8rem 0 2rem; }
+  .filtres a { padding: .45rem .9rem; border: 1px solid var(--ligne); border-radius: 999px; background: var(--surface); color: var(--encre); text-decoration: none; font-weight: 500; font-size: .95rem; }
+  .filtres a:hover { border-color: var(--primaire); color: var(--primaire); }
+  .filtres a[aria-current=page] { background: var(--primaire); border-color: var(--primaire); color: #fff; }
+  .grille { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.2rem; }
+  .vide { font-family: var(--f-lecture); }
+</style>

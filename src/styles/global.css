@@ -1,0 +1,95 @@
+@font-face{font-family:'Schibsted Grotesk';font-style:normal;font-weight:400 800;font-display:swap;src:url('/fonts/schibsted-grotesk-normal.woff2') format('woff2');}
+@font-face{font-family:'Source Serif 4';font-style:italic;font-weight:400;font-display:swap;src:url('/fonts/source-serif-4-italic.woff2') format('woff2');}
+@font-face{font-family:'Source Serif 4';font-style:normal;font-weight:400 700;font-display:swap;src:url('/fonts/source-serif-4-normal.woff2') format('woff2');}
+/* ---------- Jetons : direction « carnet de route », palette cobalt ---------- */
+:root {
+  color-scheme: light;
+  --encre: #141B2D;
+  --encre-douce: #4A5368;
+  --fond: #F5F7FB;
+  --surface: #FFFFFF;
+  /* Palette : modifier uniquement ce bloc pour changer les couleurs du site */
+  --primaire: #2348C0;       /* liens, boutons, repères */
+  --primaire-fonce: #1A3696; /* survol */
+  --doux: #E3EAFB;           /* fonds clairs, encadrés */
+  --pointilles: #A9B9E6;     /* tracé de l'itinéraire */
+  --ligne: #D9DEEA;
+  --ombre: rgba(35, 72, 192, .40);
+  --halo: rgba(35, 72, 192, .2);
+  --fond-verre: rgba(245, 247, 251, .95);
+  --sur-fonce-doux: #D6DFFA; /* texte clair sur fond primaire */
+  --pied-texte: #D9DEEA;
+  --pied-ligne: #2C3550;
+  --pied-discret: #9AA3B8;
+  --erreur: #A3261B;
+
+  --f-ui: 'Schibsted Grotesk', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --f-lecture: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+
+  --mesure: 66ch;
+  --large: 1160px;
+  --r: 8px;
+
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+*, *::before, *::after { box-sizing: inherit; }
+html { scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 84px); -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--fond);
+  color: var(--encre);
+  font-family: var(--f-ui);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+}
+img, svg { max-width: 100%; height: auto; }
+
+h1, h2, h3 { font-family: var(--f-ui); line-height: 1.12; letter-spacing: -0.02em; margin: 0 0 .5em; font-weight: 700; }
+h1 { font-size: clamp(2.1rem, 4.6vw, 3.5rem); font-weight: 800; }
+h2 { font-size: clamp(1.5rem, 2.8vw, 2.1rem); }
+h3 { font-size: 1.22rem; letter-spacing: -0.01em; }
+p { margin: 0 0 1em; }
+.lecture { font-family: var(--f-lecture); font-size: 1.125rem; line-height: 1.7; }
+
+a { color: var(--primaire); text-underline-offset: .2em; text-decoration-thickness: 1px; }
+a:hover { color: var(--primaire-fonce); text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid var(--primaire); outline-offset: 3px; border-radius: 3px; }
+
+.conteneur { width: min(100% - 2.5rem, var(--large)); margin-inline: auto; }
+.texte { max-width: var(--mesure); }
+.visuellement-cache { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.lien-evitement { position: absolute; left: -999px; top: 0; background: var(--primaire); color: #fff; padding: .6rem 1rem; z-index: 50; }
+.lien-evitement:focus { left: 1rem; top: 1rem; }
+
+/* ---------- Boutons ---------- */
+.bouton {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  font: 600 1.02rem/1.2 var(--f-ui);
+  padding: .85rem 1.3rem; min-height: 48px;
+  border-radius: var(--r); border: 1.5px solid var(--primaire);
+  text-decoration: none; cursor: pointer;
+}
+.bouton-principal { background: var(--primaire); color: #fff; }
+.bouton-principal:hover { background: var(--primaire-fonce); color: #fff; }
+.bouton-secondaire { background: var(--surface); color: var(--primaire); }
+.bouton-secondaire:hover { background: var(--doux); }
+
+/* ---------- Champs ---------- */
+label, legend { font-weight: 600; }
+.champ { display: grid; gap: .35rem; margin-bottom: 1.1rem; }
+.champ small { color: var(--encre-douce); font-weight: 400; }
+input[type=text], input[type=email], input[type=tel], input[type=month], input[type=date], input[type=number], select, textarea {
+  font: inherit; color: var(--encre); background: var(--surface);
+  border: 1.5px solid #93A09C; border-radius: var(--r);
+  padding: .7rem .8rem; min-height: 48px; width: 100%;
+}
+input:focus, select:focus, textarea:focus { border-color: var(--primaire); outline: 3px solid var(--halo); outline-offset: 0; }
+[aria-invalid=true] { border-color: var(--erreur) !important; }
+.message-erreur { color: var(--erreur); font-weight: 600; font-size: .95rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

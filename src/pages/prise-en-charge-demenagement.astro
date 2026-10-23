@@ -1,0 +1,82 @@
+---
+import Article from '../layouts/Article.astro';
+import BlocDevis from '../components/BlocDevis.astro';
+const toc = [
+  { id: 'principe', label: 'Le principe' },
+  { id: 'droits', label: 'Vos droits' },
+  { id: 'pfmd', label: 'La plateforme multi-déménageurs' },
+  { id: 'indemnitaire', label: 'Le déménageur de votre choix' },
+  { id: 'comparatif', label: 'Comparer les deux' },
+  { id: 'conseils', label: 'Nos conseils' },
+];
+const schema = { '@context': 'https://schema.org', '@type': 'Article', headline: 'Déménagement d’un gendarme muté : comment fonctionne la prise en charge', inLanguage: 'fr-FR', dateModified: '2026-10-19' };
+---
+<Article title="Prise en charge du déménagement d'un gendarme : PFMD ou déménageur au choix"
+         h1="Déménagement d’un gendarme muté : comment fonctionne la prise en charge"
+         description="Plateforme multi-déménageurs (PFMD) ou déménageur de votre choix avec remboursement : comment est pris en charge le déménagement d'un gendarme muté, et comment choisir."
+         chapo="Lorsque vous êtes muté avec changement de résidence, les frais de déménagement peuvent être pris en charge. Deux façons de faire coexistent : passer par une plateforme multi-déménageurs, ou choisir vous-même votre déménageur puis demander le remboursement."
+         maj="19 octobre 2026" toc={toc} rubrique={{ label: 'Guides', href: '/#situations-titre' }} schema={schema}>
+
+  <h2 id="principe">Le principe</h2>
+  <p>Les frais occasionnés par les changements de résidence des militaires, dont les gendarmes, sont encadrés par le décret n°&nbsp;2007-640 du 30 avril 2007 et son arrêté d’application. La prise en charge dépend de la nature de la mutation et de votre situation.</p>
+  <div class="encart">
+    <p>Seuls les textes officiels et les informations de votre service de gestion font foi. Cette page explique les grands principes, pas le calcul de vos droits personnels.</p>
+  </div>
+
+  <h2 id="droits">Vos droits&nbsp;: un volume et un plafond</h2>
+  <p>La prise en charge n’est pas illimitée. Elle repose notamment sur un volume de mobilier pris en compte, qui dépend en particulier de votre situation de famille et de votre ancienneté, et sur un plafond de remboursement.</p>
+  <ul>
+    <li>Si vous déménagez <strong>plus</strong> que votre volume de droits, la différence peut rester à votre charge.</li>
+    <li>Si vous déménagez <strong>moins</strong>, le montant pris en charge peut être calculé sur le volume réel.</li>
+  </ul>
+  <p>D’où l’intérêt de trier avant le déménagement et de faire estimer précisément votre volume.</p>
+
+  <h2 id="pfmd">Première possibilité&nbsp;: la plateforme multi-déménageurs (PFMD)</h2>
+  <p>La PFMD est un service en ligne mis à disposition par l’administration, sans obligation de l’utiliser. Vous y décrivez votre déménagement, recevez plusieurs devis de déménageurs sélectionnés, choisissez celui qui vous convient, et l’administration valide ce choix.</p>
+  <ul>
+    <li><strong>Pas d’avance de frais</strong>&nbsp;: dans la limite de vos droits, l’administration règle directement la plateforme.</li>
+    <li><strong>Plusieurs devis comparables</strong>&nbsp;: les offres sont présentées par rapport à votre plafond.</li>
+    <li><strong>Un accompagnement</strong>&nbsp;: la plateforme vous suit avant, pendant et après le déménagement, et traite les réserves en cas de problème.</li>
+  </ul>
+  <p>Plusieurs plateformes sont retenues par l’administration&nbsp;: vous choisissez librement celle que vous utilisez. Les modalités et les liens d’accès sont communiqués par la Gendarmerie.</p>
+  <p class="source">Sources&nbsp;: <a href="https://www.gendarmerie.interieur.gouv.fr/conseils/vie-pratique/vous-etes-mutes-demenagez-en-toute-serenite-grace-a-la-pfmd" target="_blank" rel="noopener">Gendarmerie nationale</a>, <a href="https://www.defense.gouv.fr/commissariat/actualites/vous-etes-mutes-demenagez-serenite-grace-pfmd" target="_blank" rel="noopener">ministère des Armées</a>.</p>
+
+  <h2 id="indemnitaire">Seconde possibilité&nbsp;: le déménageur de votre choix</h2>
+  <p>Vous pouvez aussi ne pas passer par une plateforme&nbsp;: vous choisissez vous-même votre déménageur, signez un contrat avec lui, puis faites valoir vos droits à remboursement auprès de l’administration.</p>
+  <ul>
+    <li><strong>Liberté totale</strong> dans le choix du déménageur et de la prestation.</li>
+    <li><strong>Avance des frais</strong> en règle générale&nbsp;: vous réglez le déménageur, puis êtes remboursé dans la limite de vos droits.</li>
+    <li><strong>Plus de démarches</strong>&nbsp;: comparaison des devis, constitution du dossier de remboursement, gestion d’un éventuel litige directement avec le déménageur.</li>
+  </ul>
+
+  <h2 id="comparatif">Comparer les deux</h2>
+  <div class="tableau">
+    <table>
+      <thead><tr><th scope="col"></th><th scope="col">Plateforme multi-déménageurs</th><th scope="col">Déménageur de votre choix</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Choix du déménageur</th><td>Parmi les devis de la plateforme</td><td>Libre</td></tr>
+        <tr><th scope="row">Avance de frais</th><td>Non, dans la limite de vos droits</td><td>En règle générale, oui</td></tr>
+        <tr><th scope="row">Comparaison des devis</th><td>Plusieurs devis présentés</td><td>À faire vous-même</td></tr>
+        <tr><th scope="row">Suivi et réserves</th><td>Par la plateforme</td><td>Directement avec le déménageur</td></tr>
+        <tr><th scope="row">Démarches de remboursement</th><td>Simplifiées</td><td>Dossier à constituer</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 id="conseils">Nos conseils pour bien choisir</h2>
+  <ul>
+    <li>Renseignez-vous sur vos droits avant de demander des devis&nbsp;: volume et plafond changent tout.</li>
+    <li>Faites estimer votre volume sérieusement, idéalement avec une visite ou une visioconférence.</li>
+    <li>Comparez les devis à prestation égale&nbsp;: emballage, démontage, monte-meubles, assurance.</li>
+    <li>Anticipez&nbsp;: l’été, les meilleures dates partent vite, quelle que soit la solution.</li>
+  </ul>
+
+  <BlocDevis titre="Besoin d’y voir clair sur votre déménagement ?" texte="Décrivez votre projet : un conseiller vous rappelle, répond à vos questions et vous adresse un devis, gratuitement et sans engagement." />
+</Article>
+<style>
+  .tableau { overflow-x: auto; margin: 1.5rem 0; font-family: var(--f-ui); font-size: 1rem; }
+  table { border-collapse: collapse; width: 100%; min-width: 520px; background: var(--surface); border-radius: var(--r); overflow: hidden; }
+  th, td { text-align: left; padding: .8rem 1rem; border-bottom: 1px solid var(--ligne); vertical-align: top; line-height: 1.4; }
+  thead th { background: var(--primaire); color: #fff; font-weight: 600; }
+  tbody th { font-weight: 600; width: 30%; }
+</style>

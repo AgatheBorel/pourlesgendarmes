@@ -1,0 +1,13 @@
+{
+  "name": "pourlesgendarmes",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build && node scripts/postbuild.mjs",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "7.3.5"
+  }
+}

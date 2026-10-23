@@ -1,0 +1,66 @@
+---
+import { render } from 'astro:content';
+import Article from '../../layouts/Article.astro';
+import BlocDevis from '../../components/BlocDevis.astro';
+import CarteArticle from '../../components/CarteArticle.astro';
+import { rubriques } from '../../content.config';
+import { articlesPublies, dateFr, dateIso, type ArticleEntry } from '../../lib/articles';
+import { site } from '../../data/site';
+
+export async function getStaticPaths() {
+  const tous = await articlesPublies();
+  return tous.map((article) => ({ params: { slug: article.id }, props: { article, tous } }));
+}
+interface Props { article: ArticleEntry; tous: ArticleEntry[]; }
+const { article, tous } = Astro.props;
+const { data } = article;
+const { Content, headings } = await render(article);
+const toc = headings.filter((h) => h.depth === 2).map((h) => ({ id: h.slug, label: h.text }));
+const lies = tous.filter((a) => a.id !== article.id && a.data.rubrique === data.rubrique).slice(0, 3);
+const complement = tous.filter((a) => a.id !== article.id && !lies.includes(a)).slice(0, 3 - lies.length);
+const suggestions = [...lies, ...complement];
+
+const url = `${site.url}/articles/${article.id}/`;
+const schema: object[] = [{
+  '@context': 'https://schema.org', '@type': 'Article', headline: data.title, description: data.description,
+  datePublished: dateIso(data.date), dateModified: dateIso(data.maj ?? data.date), inLanguage: 'fr-FR',
+  mainEntityOfPage: url, ...(data.motCle ? { keywords: data.motCle } : {}),
+}];
+if (data.faq.length) schema.push({ '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: data.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.r } })) });
+---
+<Article title={data.title} h1={data.title} description={data.description}
+         chapo={data.chapo} maj={dateFr(data.maj ?? data.date)} toc={toc}
+         rubrique={{ label: rubriques[data.rubrique], href: `/articles/rubrique/${data.rubrique}/` }} schema={schema} libelleSommaire="Dans cet article">
+  <Content />
+
+  {data.faq.length > 0 && (
+    <section class="faq-article" aria-labelledby="faq-article">
+      <h2 id="faq-article">Questions fréquentes</h2>
+      {data.faq.map((f) => (<details><summary>{f.q}</summary><p>{f.r}</p></details>))}
+    </section>
+  )}
+
+  {data.sources.length > 0 && (
+    <section class="sources-article" aria-labelledby="sources-article">
+      <h2 id="sources-article">Sources</h2>
+      <ul>{data.sources.map((s) => <li><a href={s.url} target="_blank" rel="noopener">{s.titre}</a></li>)}</ul>
+    </section>
+  )}
+
+  <BlocDevis />
+
+  {suggestions.length > 0 && (
+    <section class="a-lire" aria-labelledby="a-lire">
+      <h2 id="a-lire">À lire aussi</h2>
+      <div class="a-lire-grille">{suggestions.map((a) => <CarteArticle article={a} />)}</div>
+    </section>
+  )}
+</Article>
+<style>
+  .faq-article details { border-bottom: 1px solid var(--ligne); padding: .8rem 0; }
+  .faq-article summary { cursor: pointer; font-family: var(--f-ui); font-weight: 600; }
+  .faq-article details p { margin: .5rem 0 0; color: var(--encre-douce); }
+  .sources-article { font-size: 1rem; }
+  .a-lire-grille { display: grid; gap: 1rem; font-size: 1rem; }
+</style>

@@ -1,0 +1,122 @@
+---
+import Article from '../layouts/Article.astro';
+import BlocDevis from '../components/BlocDevis.astro';
+import FormulaireRapide from '../components/FormulaireRapide.astro';
+import CarteArticle from '../components/CarteArticle.astro';
+import { articlesPublies } from '../lib/articles';
+
+const conseils = (await articlesPublies()).filter((a) => a.data.rubrique === 'demenagement').slice(0, 4);
+const toc = [
+  { id: 'prise-en-charge', label: 'Qui paie le déménagement ?' },
+  { id: 'calendrier', label: 'Le calendrier' },
+  { id: 'volume', label: 'Estimer son volume' },
+  { id: 'devis', label: 'Demander et comparer les devis' },
+  { id: 'cartons', label: 'Préparer les cartons' },
+  { id: 'chargement', label: 'Le jour du chargement' },
+  { id: 'livraison', label: 'La livraison et les réserves' },
+  { id: 'cas-particuliers', label: 'Les cas particuliers' },
+  { id: 'devis-gratuit', label: 'Votre devis gratuit' },
+];
+const faq = [
+  { q: 'Le déménagement d’un gendarme muté est-il pris en charge ?', r: "En cas de mutation avec changement de résidence, les frais de déménagement peuvent être pris en charge, dans la limite de droits qui dépendent notamment de votre situation familiale et de votre ancienneté. Votre service de gestion vous indique vos droits." },
+  { q: 'Combien de temps avant faut-il réserver son déménagement ?', r: "Dès que la mutation est connue, et au moins deux mois avant en période estivale, quand la plupart des mutations ont lieu." },
+  { q: 'Que faire en cas de casse à la livraison ?', r: "Notez précisément le dommage sur la lettre de voiture avant de signer. Un dommage découvert plus tard peut être signalé au déménageur par lettre recommandée dans les dix jours suivant la livraison." },
+];
+const schema = [
+  { '@context': 'https://schema.org', '@type': 'Article', headline: 'Déménagement d’un gendarme muté : le guide complet', inLanguage: 'fr-FR', dateModified: '2026-10-19' },
+  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.r } })) },
+];
+---
+<Article title="Déménagement d'un gendarme muté : le guide complet et devis gratuit"
+         h1="Déménagement d’un gendarme muté : le guide complet"
+         description="Prise en charge, calendrier, volume, devis, cartons, livraison et réserves : tout pour réussir le déménagement de votre mutation en gendarmerie. Devis gratuit."
+         chapo="De la prise en charge à la livraison, voici comment se déroule le déménagement d’un gendarme muté, ce qu’il faut préparer à chaque étape et les pièges à éviter."
+         maj="19 octobre 2026" toc={toc} schema={schema}>
+
+  <h2 id="prise-en-charge">Qui paie le déménagement&nbsp;?</h2>
+  <p>En cas de mutation avec changement de résidence, les frais de déménagement peuvent être pris en charge par l’administration, dans la limite de vos droits&nbsp;: un volume de mobilier et un plafond, qui dépendent notamment de votre situation familiale et de votre ancienneté.</p>
+  <p>Deux façons de faire coexistent&nbsp;:</p>
+  <ul>
+    <li><strong>la plateforme multi-déménageurs</strong>&nbsp;: plusieurs devis présentés, pas d’avance de frais dans la limite de vos droits, un accompagnement jusqu’à la livraison&nbsp;;</li>
+    <li><strong>le déménageur de votre choix</strong>&nbsp;: liberté totale, mais avance des frais en règle générale et remboursement ensuite.</li>
+  </ul>
+  <p>Le détail et un tableau comparatif sont dans notre guide de <a href="/prise-en-charge-demenagement/">la prise en charge du déménagement</a>.</p>
+
+  <h2 id="calendrier">Le calendrier</h2>
+  <ul>
+    <li><strong>Dès l’annonce</strong>&nbsp;: renseignez-vous sur vos droits et sur le logement à l’arrivée.</li>
+    <li><strong>Deux mois avant</strong>&nbsp;: faites estimer votre volume et demandez vos devis.</li>
+    <li><strong>Un mois avant</strong>&nbsp;: triez, commencez les cartons des pièces les moins utilisées.</li>
+    <li><strong>Deux semaines avant</strong>&nbsp;: confirmez la date, vérifiez l’accès du camion.</li>
+    <li><strong>Le jour J</strong>&nbsp;: inventaire, lettre de voiture, état des lieux.</li>
+  </ul>
+  <p>Le <a href="/#planif-titre">rétroplanning</a> calcule ces dates à partir de votre prise de poste, et la <a href="/articles/checklist-demenagement-mutation/">checklist complète</a> reprend chaque tâche.</p>
+
+  <h2 id="volume">Estimer son volume</h2>
+  <p>Le volume, exprimé en mètres cubes, détermine le prix du déménagement, la taille du camion et, le cas échéant, ce qui reste à votre charge au-delà de vos droits. Une estimation trop basse peut entraîner un supplément le jour J.</p>
+  <ul>
+    <li>Faites l’inventaire pièce par pièce, sans oublier la cave, le garage, le grenier et le balcon.</li>
+    <li>Triez <em>avant</em> l’estimation&nbsp;: ce que vous ne déménagez pas ne compte pas.</li>
+    <li>Préférez une estimation par visite ou visioconférence, plus fiable qu’un simple formulaire.</li>
+  </ul>
+
+  <h2 id="devis">Demander et comparer les devis</h2>
+  <p>Comparez toujours les devis <strong>à prestation égale</strong>. Vérifiez sur chacun&nbsp;:</p>
+  <ul>
+    <li>le volume retenu et les dates de chargement et de livraison&nbsp;;</li>
+    <li>qui emballe, qui démonte et remonte les meubles&nbsp;;</li>
+    <li>la fourniture des cartons et du matériel d’emballage&nbsp;;</li>
+    <li>les suppléments éventuels&nbsp;: étage sans ascenseur, monte-meubles, portage long, stationnement&nbsp;;</li>
+    <li>la garantie proposée et la déclaration de valeur de vos biens.</li>
+  </ul>
+
+  <BlocDevis titre="Recevez votre devis de déménagement" texte="Décrivez votre déménagement en deux minutes : un conseiller vous rappelle au créneau de votre choix et vous adresse un devis détaillé, gratuitement." />
+
+  <h2 id="cartons">Préparer les cartons</h2>
+  <ul>
+    <li><strong>Commencez tôt</strong> par ce qui ne sert pas au quotidien&nbsp;: livres, décoration, vêtements hors saison.</li>
+    <li><strong>Objets lourds dans de petits cartons</strong>, objets légers dans les grands.</li>
+    <li><strong>Étiquetez</strong> chaque carton avec la pièce de destination et un résumé du contenu, et numérotez-les.</li>
+    <li><strong>Signalez les cartons fragiles</strong> et calez la vaisselle à la verticale, bien emballée.</li>
+    <li><strong>Gardez avec vous</strong> papiers, médicaments, objets de valeur et le carton du premier soir.</li>
+  </ul>
+
+  <h2 id="chargement">Le jour du chargement</h2>
+  <ul>
+    <li>Soyez présent du début à la fin, ou désignez quelqu’un de confiance.</li>
+    <li>Relisez l’inventaire et la <a href="/articles/lettre-de-voiture-demenagement/">lettre de voiture</a> avant de signer.</li>
+    <li>Faites un dernier tour du logement vide, placards et cave compris.</li>
+    <li>Relevez les compteurs et réalisez l’état des lieux de sortie.</li>
+  </ul>
+
+  <h2 id="livraison">La livraison et les réserves</h2>
+  <p>À l’arrivée, contrôlez vos biens <strong>avant de signer</strong> la lettre de voiture. Tout dommage ou manque doit y être noté précisément, dans la case des réserves. Un dommage découvert plus tard peut encore être signalé au déménageur par lettre recommandée dans les dix jours qui suivent la livraison (article L224-63 du code de la consommation).</p>
+
+  <h2 id="cas-particuliers">Les cas particuliers</h2>
+  <ul>
+    <li><strong>Logement en caserne</strong>&nbsp;: horaires et formalités d’accès du camion à vérifier au départ et à l’arrivée. Voir le <a href="/logement/#acces">guide du logement</a>.</li>
+    <li><strong>Logement pas encore disponible</strong>&nbsp;: garde-meubles ou déménagement en deux temps.</li>
+    <li><strong>Été</strong>&nbsp;: la haute saison des mutations, à anticiper. Voir <a href="/articles/demenagement-ete-mutation/">nos conseils pour obtenir vos dates</a>.</li>
+    <li><strong>Outre-mer et étranger</strong>&nbsp;: des formalités et des délais particuliers&nbsp;; renseignez-vous très tôt auprès de votre service de gestion.</li>
+  </ul>
+
+  <h2 id="devis-gratuit">Votre devis de déménagement gratuit</h2>
+  <div class="form-guide"><FormulaireRapide id="guide" titre="Commencez votre demande" /></div>
+
+  {conseils.length > 0 && (
+    <>
+      <h2 id="conseils">Nos conseils déménagement</h2>
+      <div class="conseils">{conseils.map((a) => <CarteArticle article={a} />)}</div>
+    </>
+  )}
+
+  <h2 id="faq">Questions fréquentes</h2>
+  {faq.map((f) => (<details class="faq-g"><summary>{f.q}</summary><p>{f.r}</p></details>))}
+</Article>
+<style>
+  .form-guide { font-family: var(--f-ui); font-size: 1rem; margin: 1rem 0 2rem; }
+  .conseils { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; font-size: 1rem; }
+  .faq-g { border-bottom: 1px solid var(--ligne); padding: .8rem 0; }
+  .faq-g summary { cursor: pointer; font-family: var(--f-ui); font-weight: 600; }
+  .faq-g p { margin: .5rem 0 0; color: var(--encre-douce); }
+</style>
