@@ -1,0 +1,112 @@
+---
+import Article from '../layouts/Article.astro';
+import BlocDevis from '../components/BlocDevis.astro';
+import CarteArticle from '../components/CarteArticle.astro';
+import { articlesPublies } from '../lib/articles';
+
+const lies = (await articlesPublies()).filter((a) => /pfmd|reste-a-charge|eureka|outre-mer|etranger|litige|gendarme-mutation-ete/.test(a.id)).slice(0, 6);
+const toc = [
+  { id: 'definition', label: 'Qu’est-ce que la PFMD ?' },
+  { id: 'pour-qui', label: 'Pour qui ?' },
+  { id: 'avantages', label: 'Ce que la PFMD apporte' },
+  { id: 'deroulement', label: 'Comment ça se passe' },
+  { id: 'perimetre', label: 'France, étranger, outre-mer' },
+  { id: 'accompagnement', label: 'L’accompagnement' },
+  { id: 'pfmd-ou-classique', label: 'PFMD ou déménagement classique ?' },
+  { id: 'faq', label: 'Questions fréquentes' },
+];
+const faq = [
+  { q: 'Que veut dire PFMD ?', r: 'PFMD signifie plateforme multi-déménageurs. C’est un service en ligne qui permet aux militaires mutés d’obtenir des devis de déménageurs présélectionnés et de faire régler leur déménagement directement par l’administration, dans la limite de leurs droits.' },
+  { q: 'Faut-il avancer les frais avec la PFMD ?', r: 'Non. Selon le ministère des Armées, vous n’avez rien à avancer : l’administration paie directement la plateforme, dans la limite de votre plafond.' },
+  { q: 'Combien de devis reçoit-on avec la PFMD ?', r: 'Selon le ministère des Armées, au moins deux devis comparatifs et sous plafond financier, en moins de 72 heures.' },
+  { q: 'Est-on obligé de passer par la PFMD ?', r: 'Non. Vous pouvez aussi choisir vous-même votre déménageur puis demander le remboursement de vos frais dans la limite de vos droits. La PFMD est une option, encouragée par l’administration.' },
+  { q: 'Les gendarmes peuvent-ils utiliser une PFMD ?', r: 'Oui. Selon la Gendarmerie nationale, la PFMD est ouverte aux gendarmes mutés à partir du 1er janvier 2027, en métropole et vers les pays d’Europe accessibles par la route.' },
+];
+const schema = [
+  { '@context': 'https://schema.org', '@type': 'Article', headline: 'PFMD : tout comprendre sur la plateforme multi-déménageurs des militaires et des gendarmes', inLanguage: 'fr-FR', dateModified: '2026-10-23' },
+  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.r } })) },
+];
+---
+<Article title="PFMD : la plateforme multi-déménageurs des militaires et gendarmes expliquée"
+         h1="PFMD : tout comprendre sur la plateforme multi-déménageurs"
+         description="PFMD, plateforme multi-déménageurs : définition, avantages, déroulement, périmètre et différences avec le déménagement classique, pour militaires et gendarmes mutés."
+         chapo="La PFMD est devenue la façon la plus simple de faire prendre en charge son déménagement lors d’une mutation. Voici ce qu’elle est, comment elle fonctionne et quand elle est intéressante, d’après les informations officielles."
+         maj="23 octobre 2026" toc={toc} schema={schema}
+         rubrique={{ label: 'Déménagement', href: '/demenagement/' }}>
+
+  <div class="encart">
+    <p>Ce site est indépendant&nbsp;: il n’est pas une plateforme multi-déménageurs et n’est pas un site officiel. Les informations ci-dessous sont tirées des pages publiques du ministère des Armées et de la Gendarmerie, citées en bas de page. Pour accéder à une PFMD, utilisez les liens et codes communiqués par votre administration.</p>
+  </div>
+
+  <h2 id="definition">Qu’est-ce que la PFMD&nbsp;?</h2>
+  <p>La <strong>PFMD</strong>, ou <strong>plateforme multi-déménageurs</strong>, est un service en ligne proposé aux militaires mutés avec changement de résidence. Elle met en relation l’administré avec des déménageurs présélectionnés, lui présente des devis comparatifs, puis organise et suit le déménagement.</p>
+  <p>Sa particularité&nbsp;: la <strong>prise en charge directe</strong>. Dans la limite de vos droits, l’administration paie directement la plateforme, sans que vous avanciez les frais.</p>
+  <p>Plusieurs plateformes sont retenues par l’administration&nbsp;: le ministère des Armées en présentait trois au choix pour le plan annuel de mutation 2025. Vous choisissez librement celle que vous utilisez, avec le code d’accès communiqué par votre administration.</p>
+
+  <h2 id="pour-qui">Pour qui&nbsp;?</h2>
+  <ul>
+    <li><strong>Les militaires des armées</strong> mutés avec changement de résidence&nbsp;: le dispositif est porté par le service du commissariat des armées.</li>
+    <li><strong>Les gendarmes</strong>&nbsp;: selon la Gendarmerie nationale, la PFMD leur est ouverte <strong>à partir du 1er janvier 2027</strong>, en métropole et vers les pays d’Europe accessibles par la route. Voir <a href="/articles/pfmd-gendarmerie-2027/">PFMD Gendarmerie&nbsp;: ce qui change</a>.</li>
+  </ul>
+  <p>L’utilisation de la PFMD n’est pas obligatoire&nbsp;: le déménagement «&nbsp;classique&nbsp;», avec le déménageur de votre choix, reste possible.</p>
+
+  <h2 id="avantages">Ce que la PFMD apporte</h2>
+  <p>D’après le ministère des Armées, et dans des termes très proches d’après la Gendarmerie nationale&nbsp;:</p>
+  <ul>
+    <li><strong>des devis rapides</strong>&nbsp;: au moins deux devis comparatifs et sous plafond financier, en moins de 72 heures&nbsp;;</li>
+    <li><strong>rien à avancer</strong>&nbsp;: l’administration paie directement la plateforme&nbsp;;</li>
+    <li><strong>une procédure entièrement en ligne</strong>&nbsp;;</li>
+    <li><strong>des déménageurs présélectionnés</strong> pour leur sérieux&nbsp;;</li>
+    <li><strong>un accompagnement personnalisé</strong> par la plateforme, et l’appui de la plateforme en cas de casse ou de dysfonctionnement, avec celui du commissariat des armées pour les militaires des armées, ou de la cellule PFMD de la Gendarmerie pour les gendarmes.</li>
+  </ul>
+
+  <h2 id="deroulement">Comment se déroule un déménagement avec une PFMD</h2>
+  <ol>
+    <li><strong>Vous vous inscrivez</strong> sur la plateforme de votre choix, avec le code d’accès communiqué par votre administration.</li>
+    <li><strong>Vous décrivez votre déménagement</strong>&nbsp;: dates, adresses, volume. La plateforme vous aide à estimer ce volume.</li>
+    <li><strong>Vous recevez des devis</strong> présentés par rapport à votre plafond.</li>
+    <li><strong>Vous choisissez</strong> votre offre, qui est validée par l’administration.</li>
+    <li><strong>Le déménagement a lieu</strong>, suivi par la plateforme.</li>
+    <li><strong>La plateforme est réglée</strong> directement par l’administration, dans la limite de vos droits.</li>
+  </ol>
+  <p>Le détail pas à pas est dans notre article <a href="/articles/pfmd-etapes-demenagement/">PFMD&nbsp;: les étapes d’un déménagement</a>.</p>
+
+  <BlocDevis titre="Préparer votre déménagement de mutation" texte="Une question sur votre déménagement, un volume à estimer ? Décrivez votre projet : un conseiller vous rappelle au créneau de votre choix." />
+
+  <h2 id="perimetre">France, étranger, outre-mer</h2>
+  <ul>
+    <li><strong>Métropole</strong>&nbsp;: c’est le cœur du dispositif.</li>
+    <li><strong>Étranger par la route</strong>&nbsp;: selon le ministère des Armées, depuis 2021 la PFMD permet aussi de déménager vers les pays accessibles par voie routière&nbsp;; pour les gendarmes, la Gendarmerie annonce les pays d’Europe accessibles par la route à partir de 2027. Voir <a href="/articles/pfmd-demenagement-etranger-route/">déménager à l’étranger par la route</a>.</li>
+    <li><strong>Outre-mer</strong>&nbsp;: le ministère des Armées a annoncé l’extension progressive de la prise en charge directe aux déménagements outre-mer et à l’étranger, par d’autres dispositifs que la PFMD. Voir <a href="/articles/demenagement-outre-mer-militaire-prise-en-charge/">la prise en charge directe outre-mer</a>.</li>
+  </ul>
+
+  <h2 id="accompagnement">L’accompagnement et les recours</h2>
+  <p>Pour les militaires des armées, le ministère indique qu’un opérateur du centre interarmées du soutien à la mobilité (CIMob) vous appelle avant votre déménagement PFMD (deux semaines avant en métropole, trois pour l’étranger), puis, avec votre autorisation, cinq jours après, pour vérifier que tout s’est bien passé. Les informations officielles sont regroupées dans la rubrique «&nbsp;Mon déménagement&nbsp;» du portail Eurêka. Pour les gendarmes, la Gendarmerie renvoie à l’intranet de la DSF, rubrique «&nbsp;Administration et finances / Administration et règlementation / changement de résidence&nbsp;». Voir <a href="/articles/eureka-mon-demenagement-informations-officielles/">où trouver les informations officielles</a>.</p>
+  <p>En cas de casse ou de litige, la plateforme est votre premier interlocuteur. Voir <a href="/articles/pfmd-casse-litige-recours/">casse ou litige avec une PFMD&nbsp;: que faire</a>.</p>
+
+  <h2 id="pfmd-ou-classique">PFMD ou déménagement classique&nbsp;?</h2>
+  <p>Le déménagement classique laisse le libre choix du déménageur, mais impose en règle générale d’avancer les frais et expose davantage au reste à charge. Le ministère des Armées encourage le recours aux PFMD dans le cadre de sa mesure «&nbsp;Déménager sans reste à charge&nbsp;». Notre comparatif détaillé&nbsp;: <a href="/articles/pfmd-ou-demenagement-classique/">PFMD ou déménagement classique, lequel choisir&nbsp;?</a>, et le guide de <a href="/prise-en-charge-demenagement/">la prise en charge du déménagement</a>.</p>
+
+  {lies.length > 0 && (
+    <>
+      <h2 id="articles-pfmd">Nos articles sur la PFMD</h2>
+      <div class="cartes">{lies.map((a) => <CarteArticle article={a} />)}</div>
+    </>
+  )}
+
+  <h2 id="faq">Questions fréquentes</h2>
+  {faq.map((f) => (<details class="faq-g"><summary>{f.q}</summary><p>{f.r}</p></details>))}
+
+  <h2 id="sources">Sources</h2>
+  <ul class="source">
+    <li><a href="https://www.defense.gouv.fr/commissariat/actualites/vous-etes-mutes-demenagez-serenite-grace-pfmd" target="_blank" rel="noopener">Ministère des Armées : « Vous êtes mutés ? Déménagez en toute sérénité grâce à la PFMD ! »</a></li>
+    <li><a href="https://www.defense.gouv.fr/commissariat/actualites/plan-fidelisation-360-armees-focus-mesure-sca-demenager-reste-charge" target="_blank" rel="noopener">Ministère des Armées : « Plan fidélisation 360, mesure Déménager sans reste à charge »</a></li>
+    <li><a href="https://www.gendarmerie.interieur.gouv.fr/conseils/vie-pratique/vous-etes-mutes-demenagez-en-toute-serenite-grace-a-la-pfmd" target="_blank" rel="noopener">Gendarmerie nationale : « Vous êtes mutés ? Déménagez en toute sérénité grâce à la PFMD ! » (2026)</a></li>
+  </ul>
+</Article>
+<style>
+  .cartes { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; font-size: 1rem; }
+  .faq-g { border-bottom: 1px solid var(--ligne); padding: .8rem 0; }
+  .faq-g summary { cursor: pointer; font-family: var(--f-ui); font-weight: 600; }
+  .faq-g p { margin: .5rem 0 0; color: var(--encre-douce); }
+</style>

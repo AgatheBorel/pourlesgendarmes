@@ -4,6 +4,7 @@ export const demenagement = {
   label: 'Déménagement',
   sous: [
     { href: '/demenagement/', label: 'Le guide du déménagement', texte: 'Volume, devis, cartons, jour J : toutes les étapes' },
+    { href: '/pfmd/', label: 'La PFMD', texte: 'La plateforme multi-déménageurs expliquée' },
     { href: '/prise-en-charge-demenagement/', label: 'La prise en charge', texte: 'Plateforme multi-déménageurs ou déménageur au choix' },
     { href: '/articles/rubrique/demenagement/', label: 'Conseils déménagement', texte: 'Lettre de voiture, saison des mutations, astuces' },
     { href: '/demande-de-devis/', label: 'Demander un devis', texte: 'Gratuit et sans engagement, en deux minutes' },

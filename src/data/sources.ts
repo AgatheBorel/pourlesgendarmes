@@ -4,7 +4,7 @@ export const sources = [
     titre: 'Vous êtes mutés ? Déménagez en toute sérénité grâce à la PFMD',
     editeur: 'Gendarmerie nationale',
     url: 'https://www.gendarmerie.interieur.gouv.fr/conseils/vie-pratique/vous-etes-mutes-demenagez-en-toute-serenite-grace-a-la-pfmd',
-    resume: 'Présentation officielle de la plateforme multi-déménageurs pour les gendarmes mutés.',
+    resume: 'La PFMD ouverte aux gendarmes mutés à partir du 1er janvier 2027, en métropole et en Europe par la route.',
   },
   {
     titre: 'Vous êtes mutés ? Déménagez en toute sérénité grâce à la PFMD',

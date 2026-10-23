@@ -16,6 +16,9 @@ Il est ainsi possible de rédiger dix articles en une séance et de les étaler 
 
 La case **brouillon** bloque la publication quelle que soit la date.
 
+Un lien vers un article pas encore publié s'affiche en texte simple, puis devient cliquable de lui-même le jour
+de la publication de sa cible : on peut donc relier les articles programmés entre eux sans risque de lien cassé.
+
 ## Méthode A — Pages CMS (recommandée)
 
 app.pagescms.org > dépôt `pourlesgendarmes` > **Articles** > **Add an entry**.
