@@ -58,3 +58,11 @@ jobs:
           protocol: ftp
           local-dir: ./dist/
           server-dir: ./www/
+
+      # L'outil d'envoi ignore les fichiers commençant par un point : on envoie .htaccess à part.
+      - name: Envoyer le fichier .htaccess
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: curl --fail --silent --show-error -T dist/.htaccess "ftp://${FTP_SERVER}/www/.htaccess" --user "${FTP_USERNAME}:${FTP_PASSWORD}"
