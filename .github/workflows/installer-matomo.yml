@@ -1,0 +1,33 @@
+# Envoie les fichiers de Matomo sur l'hébergement OVH, dans le dossier « stats » (hors du site www).
+# À lancer manuellement, une seule fois, depuis l'onglet Actions > « Installer Matomo » > Run workflow.
+# Les mises à jour ultérieures de Matomo se font ensuite depuis son interface.
+name: Installer Matomo
+
+on:
+  workflow_dispatch:
+
+jobs:
+  installer:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Télécharger Matomo (version officielle 5.14.1)
+        run: |
+          curl -fsSL -o matomo.zip https://builds.matomo.org/matomo-5.14.1.zip
+          unzip -q matomo.zip
+          test -f matomo/index.php
+
+      - name: Installer l'outil d'envoi SFTP
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+
+      - name: Envoyer Matomo dans le dossier stats (SFTP)
+        env:
+          LFTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          SERVEUR: ${{ secrets.FTP_SERVER }}
+          UTILISATEUR: ${{ secrets.FTP_USERNAME }}
+        run: |
+          lftp --env-password -u "$UTILISATEUR" "sftp://$SERVEUR:22" -e "
+            set sftp:auto-confirm yes;
+            set net:max-retries 3;
+            set net:timeout 30;
+            mirror --reverse --parallel=8 --verbose=1 matomo/ stats/;
+            bye"
