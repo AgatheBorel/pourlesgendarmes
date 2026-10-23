@@ -3,9 +3,7 @@ import Article from '../layouts/Article.astro';
 import { site } from '../data/site';
 const e = site.editor;
 ---
-<Article title="Données personnelles" h1="Vos données personnelles" maj="19 octobre 2026" noindex>
-  <p class="a-completer">Modèle à faire valider par votre DPO ou votre conseil juridique avant mise en ligne.</p>
-
+<Article title="Données personnelles" h1="Vos données personnelles" maj="23 octobre 2026" noindex>
   <h2>Qui traite vos données</h2>
   <p>Le responsable du traitement des données collectées sur {site.domain} est l’éditeur du site, identifié dans les <a href="/mentions-legales/">mentions légales</a>. Contact : {e.dpoEmail}.</p>
 
@@ -19,11 +17,11 @@ const e = site.editor;
 
   <h2>Combien de temps</h2>
   <p>Une copie technique de votre demande est conservée 30 jours sur le serveur du site, puis supprimée automatiquement.</p>
-  <p class="a-completer">Dans nos outils commerciaux : [DURÉE] à compter de votre dernier contact si aucun devis n'est signé. En cas de prestation, les durées légales de conservation des documents commerciaux s'appliquent.</p>
+  <p>Dans nos outils commerciaux, vos données sont conservées trois ans à compter de votre dernier contact si aucun devis n’est signé, conformément aux recommandations de la CNIL. En cas de prestation, les durées légales de conservation des documents commerciaux s’appliquent.</p>
 
   <h2>Vos droits</h2>
   <p>Vous pouvez à tout moment accéder à vos données, les rectifier, les effacer, retirer votre consentement, vous opposer au traitement ou en demander la portabilité, en écrivant à {e.dpoEmail}. Vous pouvez aussi adresser une réclamation à la CNIL (cnil.fr).</p>
 
   <h2>Cookies et mesure d'audience</h2>
-  <p>Ce site ne dépose aucun cookie publicitaire et n'utilise pas de service tiers pour ses polices de caractères. <span class="a-completer">À mettre à jour si un outil de mesure d'audience est ajouté.</span></p>
+  <p>Ce site ne dépose aucun cookie publicitaire et n'utilise pas de service tiers pour ses polices de caractères.</p>
 </Article>
