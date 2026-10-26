@@ -29,5 +29,5 @@ jobs:
             set sftp:auto-confirm yes;
             set net:max-retries 3;
             set net:timeout 30;
-            mirror --reverse --parallel=8 --verbose=1 matomo/ stats/;
+            mirror --reverse --parallel=8 --verbose=1 matomo/ qqatakc4mu/;
             bye"
