@@ -1,0 +1,43 @@
+# Force la connexion chiffrée (HTTPS) sur stats.pourlesgendarmes.fr et ajoute des protections du navigateur.
+# À lancer manuellement une fois : onglet Actions > « Sécuriser Matomo » > Run workflow.
+name: Sécuriser Matomo
+
+on:
+  workflow_dispatch:
+
+jobs:
+  securiser:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Préparer le fichier de sécurité
+        run: |
+          cat > matomo.htaccess <<'FIN'
+          # stats.pourlesgendarmes.fr : forcer HTTPS et protections du navigateur
+          <IfModule mod_rewrite.c>
+            RewriteEngine On
+            RewriteCond %{HTTPS} off
+            RewriteCond %{HTTP:X-Forwarded-Proto} !https
+            RewriteRule ^ https://stats.pourlesgendarmes.fr%{REQUEST_URI} [R=301,L]
+          </IfModule>
+          <IfModule mod_headers.c>
+            Header always set Strict-Transport-Security "max-age=31536000"
+            Header always set X-Content-Type-Options "nosniff"
+            Header always set Referrer-Policy "strict-origin-when-cross-origin"
+            Header always unset X-Powered-By
+          </IfModule>
+          FIN
+
+      - name: Installer l'outil d'envoi SFTP
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+
+      - name: Envoyer le fichier sur le serveur (SFTP)
+        env:
+          LFTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          SERVEUR: ${{ secrets.FTP_SERVER }}
+          UTILISATEUR: ${{ secrets.FTP_USERNAME }}
+        run: |
+          lftp --env-password -u "$UTILISATEUR" "sftp://$SERVEUR:22" -e "
+            set sftp:auto-confirm yes;
+            set net:max-retries 3;
+            put matomo.htaccess -o qqatakc4mu/.htaccess;
+            bye"
