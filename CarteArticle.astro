@@ -1,0 +1,23 @@
+---
+import { rubriques } from '../content.config';
+import { dateFr, type ArticleEntry } from '../lib/articles';
+interface Props { article: ArticleEntry; titreNiveau?: 'h2' | 'h3'; }
+const { article, titreNiveau = 'h3' } = Astro.props;
+const T = titreNiveau;
+---
+<article class="carte">
+  <p class="carte-meta"><span class="carte-rubrique">{rubriques[article.data.rubrique]}</span> <time datetime={article.data.date.toISOString()}>{dateFr(article.data.maj ?? article.data.date)}</time></p>
+  <T class="carte-titre"><a href={`/articles/${article.id}/`}>{article.data.title}</a></T>
+  <p class="carte-desc">{article.data.description}</p>
+</article>
+<style>
+  .carte { position: relative; display: grid; gap: .45rem; align-content: start; padding: 1.3rem; background: var(--surface); border: 1px solid var(--ligne); border-radius: 12px; transition: border-color .15s; }
+  .carte:hover { border-color: var(--primaire); }
+  .carte-meta { display: flex; gap: .7rem; align-items: center; flex-wrap: wrap; margin: 0; font-size: .88rem; color: var(--encre-douce); }
+  .carte-rubrique { background: var(--doux); color: var(--primaire-fonce); font-weight: 600; padding: .1rem .55rem; border-radius: 4px; }
+  .carte-titre { font-size: 1.18rem; line-height: 1.25; margin: 0; }
+  .carte-titre a { color: var(--encre); text-decoration: none; }
+  .carte-titre a::after { content: ""; position: absolute; inset: 0; } /* toute la carte est cliquable */
+  .carte:hover .carte-titre a { color: var(--primaire); text-decoration: underline; }
+  .carte-desc { margin: 0; font-family: var(--f-lecture); color: var(--encre-douce); line-height: 1.5; }
+</style>

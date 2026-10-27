@@ -1,0 +1,84 @@
+---
+import Article from '../layouts/Article.astro';
+import BlocDevis from '../components/BlocDevis.astro';
+const toc = [
+  { id: 'annonce', label: 'Dès l’annonce de la mutation' },
+  { id: 'devis', label: 'Deux mois avant : les devis' },
+  { id: 'famille', label: 'Six semaines avant : la famille' },
+  { id: 'tri', label: 'Un mois avant : trier' },
+  { id: 'etat-des-lieux', label: 'Deux semaines avant : l’état des lieux' },
+  { id: 'premier-soir', label: 'Une semaine avant : le carton du premier soir' },
+  { id: 'livraison', label: 'Le jour J : vérifier la livraison' },
+  { id: 'reserves', label: 'En cas de dommage : les réserves' },
+  { id: 'installation', label: 'Après l’installation' },
+];
+const schema = { '@context': 'https://schema.org', '@type': 'Article', headline: 'Mutation en gendarmerie : bien préparer son déménagement, étape par étape', inLanguage: 'fr-FR', dateModified: '2026-10-19' };
+---
+<Article title="Mutation en gendarmerie : les étapes du déménagement"
+         h1="Mutation en gendarmerie : bien préparer son déménagement, étape par étape"
+         description="De l'annonce de la mutation à l'installation : calendrier, devis, famille, état des lieux, livraison et réserves. Le guide pratique pour les gendarmes mutés."
+         chapo="Une mutation laisse souvent peu de temps pour s’organiser, et tombe fréquemment l’été, en même temps que des milliers d’autres. Voici les étapes dans l’ordre, avec ce qu’il faut faire et quand."
+         maj="19 octobre 2026" toc={toc} rubrique={{ label: 'Guides', href: '/#situations-titre' }} schema={schema}>
+
+  <div class="encart">
+    <p>Ce guide donne des repères pratiques. Vos droits (prise en charge, volume, indemnités) dépendent de votre situation et des textes en vigueur&nbsp;: en cas de doute, renseignez-vous auprès de votre unité ou de votre service de gestion.</p>
+  </div>
+
+  <h2 id="annonce">Dès l’annonce de la mutation&nbsp;: rassembler et se renseigner</h2>
+  <ul>
+    <li>Conservez votre ordre de mutation et les pièces de votre dossier dans un même endroit, en version papier et numérique.</li>
+    <li>Contactez votre future unité pour connaître les conditions de logement à l’arrivée&nbsp;: logement en caserne, date de disponibilité, état des lieux. Le <a href="/logement/">guide du logement</a> détaille ces points.</li>
+    <li>Notez les dates clés&nbsp;: fin de poste, prise de poste, congés éventuels entre les deux.</li>
+    <li>Renseignez-vous sur la façon dont votre déménagement sera pris en charge&nbsp;: voir <a href="/prise-en-charge-demenagement/">plateforme multi-déménageurs ou déménageur de votre choix</a>.</li>
+  </ul>
+
+  <h2 id="devis">Deux mois avant&nbsp;: demander les devis</h2>
+  <p>C’est l’étape à ne pas repousser. En période de mutations, les plannings se remplissent vite et les dates de chargement les plus demandées partent en premier.</p>
+  <p>Pour un devis juste, préparez&nbsp;:</p>
+  <ul>
+    <li>l’adresse de départ et celle d’arrivée, ou au moins la ville&nbsp;;</li>
+    <li>le type de logement, l’étage et les accès (ascenseur, stationnement du camion, accès à la caserne)&nbsp;;</li>
+    <li>la liste des objets volumineux, fragiles ou de valeur.</li>
+  </ul>
+
+  <BlocDevis titre="Faites chiffrer votre déménagement" texte="Décrivez votre déménagement en deux minutes : un conseiller vous rappelle au créneau de votre choix pour établir votre devis, gratuitement." />
+
+  <h2 id="famille">Six semaines avant&nbsp;: organiser la vie de famille</h2>
+  <ul>
+    <li>Écoles, collège, crèche&nbsp;: demandez les certificats de radiation et préparez les inscriptions.</li>
+    <li>Contrats&nbsp;: énergie, internet, assurance habitation, mutuelle. Prévoyez les résiliations et les ouvertures à la nouvelle adresse.</li>
+    <li>Courrier&nbsp;: activez un suivi de courrier vers votre nouvelle adresse.</li>
+  </ul>
+  <p>Le guide <a href="/mutation-en-famille/">muter en famille</a> reprend toutes ces démarches dans l’ordre.</p>
+
+  <h2 id="tri">Un mois avant&nbsp;: trier</h2>
+  <p>Chaque objet que vous ne déménagez pas, c’est du temps, des cartons et du volume en moins. Faites le tri pièce par pièce&nbsp;: donner, vendre, jeter, garder. Commencez par la cave, le garage et les placards, qui demandent le plus de temps.</p>
+
+  <h2 id="etat-des-lieux">Deux semaines avant&nbsp;: l’état des lieux de sortie</h2>
+  <p>Prenez rendez-vous avec le service gestionnaire de votre logement pour l’état des lieux de sortie. Prévoyez le nettoyage et les petites réparations en amont, et gardez une copie signée.</p>
+  <p>Si vous quittez un logement en caserne, renseignez-vous aussi sur les conditions d’accès du camion de déménagement et transmettez-les à votre déménageur. Voir <a href="/logement/#acces">l’accès des véhicules en caserne</a>.</p>
+
+  <h2 id="premier-soir">Une semaine avant&nbsp;: le carton du premier soir</h2>
+  <p>Préparez un sac ou un carton qui voyage avec vous, pas dans le camion&nbsp;: papiers d’identité, dossier de mutation, ordonnances et médicaments, chargeurs, objets de valeur, de quoi dormir et se laver le premier soir.</p>
+
+  <h2 id="livraison">Le jour J&nbsp;: vérifier la livraison avant de signer</h2>
+  <ul>
+    <li>Contrôlez l’inventaire et l’état de vos biens au déchargement, pièce par pièce si possible.</li>
+    <li>Ne signez la lettre de voiture qu’après ce contrôle.</li>
+    <li>S’il y a un dommage ou un manque, notez-le précisément sur la lettre de voiture, dans la case des réserves&nbsp;: quel objet, quel dommage.</li>
+  </ul>
+
+  <h2 id="reserves">En cas de dommage&nbsp;: les réserves</h2>
+  <p>Un dommage découvert après le départ des déménageurs peut encore être signalé. Le code de la consommation prévoit que les réserves faites à la livraison, ou leur absence, peuvent être complétées par une protestation adressée au déménageur <strong>par lettre recommandée dans les dix jours</strong> qui suivent la livraison.</p>
+  <ul>
+    <li>Décrivez précisément chaque dommage et joignez des photos.</li>
+    <li>Gardez une copie de la lettre et l’accusé de réception.</li>
+    <li>Si vous êtes passé par une plateforme multi-déménageurs, informez-la aussi&nbsp;: elle est votre interlocuteur pour le traitement des réserves.</li>
+  </ul>
+  <p class="source">Source&nbsp;: article L224-63 du code de la consommation.</p>
+
+  <h2 id="installation">Après l’installation</h2>
+  <p>Faites l’état des lieux d’entrée avec soin, photos à l’appui. Mettez à jour votre adresse auprès des organismes (impôts, caisse d’allocations familiales, assurance maladie, banque, carte grise)&nbsp;: le service de changement d’adresse en ligne de Service-Public.fr permet d’en prévenir plusieurs en une fois.</p>
+
+  <BlocDevis />
+</Article>

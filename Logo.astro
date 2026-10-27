@@ -1,0 +1,25 @@
+---
+// Logo officiel du site : la maison en mouvement + nom sur deux niveaux.
+interface Props { fonce?: boolean; }
+const { fonce = false } = Astro.props;
+const trait = fonce ? '#9DB0EE' : 'var(--primaire)';
+const vitesse = fonce ? '#5F7FE6' : '#9DB0EE';
+---
+<span class="logo-bloc" class:list={{ fonce }}>
+  <svg width="38" height="38" viewBox="0 0 40 40" aria-hidden="true">
+    <g stroke-linecap="round" fill="none">
+      <path d="M3 18h7M1.5 24h8.5M4 30h6" stroke={vitesse} stroke-width="2.6"/>
+      <path d="M15 17.5 26 8.5l11 9V34H15Z" stroke={trait} stroke-width="3.2" stroke-linejoin="round"/>
+      <path d="M23.2 34v-7.5h5.6V34" stroke={trait} stroke-width="3.2" stroke-linejoin="round"/>
+    </g>
+  </svg>
+  <span class="logo-texte"><span class="logo-pour">pour les</span><span class="logo-nom">gendarmes</span></span>
+</span>
+<style>
+  .logo-bloc { display: inline-flex; align-items: center; gap: .55rem; }
+  .logo-texte { display: inline-grid; line-height: 1; font-family: var(--f-ui); letter-spacing: -.025em; }
+  .logo-pour { font-weight: 500; font-size: .78rem; color: var(--primaire); letter-spacing: .01em; margin-bottom: .1rem; }
+  .logo-nom { font-weight: 800; font-size: 1.3rem; color: var(--encre); }
+  .fonce .logo-pour { color: #9DB0EE; }
+  .fonce .logo-nom { color: #fff; }
+</style>

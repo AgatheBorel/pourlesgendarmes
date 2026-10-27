@@ -1,0 +1,216 @@
+---
+import Base from '../layouts/Base.astro';
+import Planificateur from '../components/Planificateur.astro';
+import FormulaireRapide from '../components/FormulaireRapide.astro';
+import { faq } from '../data/faq';
+import { sources } from '../data/sources';
+import { site } from '../data/site';
+import CarteArticle from '../components/CarteArticle.astro';
+import { articlesPublies } from '../lib/articles';
+const derniers = (await articlesPublies()).slice(0, 3);
+
+const situations = [
+  { titre: 'J’organise mon déménagement', texte: 'Volume, devis, cartons, livraison : le guide complet.', href: '/demenagement/' },
+  { titre: "Je viens d'apprendre ma mutation", texte: 'Les documents à rassembler et le calendrier à suivre.', href: '/guide-mutation/' },
+  { titre: 'Je veux comprendre la prise en charge', texte: 'Plateforme multi-déménageurs ou déménageur de votre choix : les différences.', href: '/prise-en-charge-demenagement/' },
+  { titre: 'Je quitte mon logement en caserne', texte: 'État des lieux, accès des camions, assurance : ce qu’il faut prévoir.', href: '/logement/' },
+  { titre: 'Je pars avec ma famille', texte: 'École, conjoint, CAF, carte grise : l’ordre des démarches.', href: '/mutation-en-famille/' },
+];
+
+const schema = [
+  { '@context': 'https://schema.org', '@type': 'WebSite', name: site.name, url: site.url, inLanguage: 'fr-FR' },
+  { '@context': 'https://schema.org', '@type': 'FAQPage',
+    mainEntity: faq.slice(0, 4).map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.r } })) },
+];
+---
+<Base title="Déménagement des gendarmes : guides de mutation et devis gratuits | Pour les gendarmes"
+      description="Gendarme muté ? Étapes du déménagement, logement, prise en charge, démarches en famille : des guides clairs et sourcés. Et vos devis de déménagement, gratuits et sans engagement."
+      schema={schema}>
+
+  <!-- 1. Hero : promesse + premier pas du devis -->
+  <section class="hero" aria-labelledby="hero-titre">
+    <div class="conteneur hero-in">
+      <div class="hero-texte">
+        <h1 id="hero-titre">Gendarme muté&nbsp;: préparez votre déménagement l’esprit tranquille</h1>
+        <p class="hero-intro lecture">
+          Calendrier, logement, prise en charge, démarches en famille&nbsp;: tout ce qu’il faut savoir
+          pour votre mutation, expliqué simplement et rattaché aux textes officiels.
+        </p>
+        <ul class="hero-points">
+          <li><strong>Des guides pratiques</strong> pour chaque étape de la mutation</li>
+          <li><strong>Un rétroplanning</strong> calculé à partir de votre date de prise de poste</li>
+          <li><strong>Des devis gratuits</strong> et un conseiller qui vous rappelle quand vous le souhaitez</li>
+        </ul>
+      </div>
+      <div class="hero-form">
+        <FormulaireRapide id="hero" />
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Entrées par situation -->
+  <section class="bloc conteneur" aria-labelledby="situations-titre">
+    <div class="entete-bloc">
+      <h2 id="situations-titre">Par où commencer&nbsp;?</h2>
+      <p class="lecture">Choisissez votre situation, on vous emmène au bon guide.</p>
+    </div>
+    <ol class="parcours">
+      {situations.map((s) => (
+        <li>
+          <a href={s.href}>
+            <span class="parcours-situation">{s.titre}</span>
+            <span class="parcours-texte">{s.texte}</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <!-- 3. Outil -->
+  <section class="bloc bloc-clair" aria-label="Rétroplanning de mutation">
+    <div class="conteneur outil">
+      <div class="outil-intro">
+        <h2>Vos étapes, à vos dates</h2>
+        <p class="lecture">Indiquez votre date de prise de poste&nbsp;: le rétroplanning calcule quand faire chaque démarche et vous montre où vous en êtes.</p>
+        <p class="lecture">Le détail de chaque étape est dans le <a href="/guide-mutation/">guide de la mutation</a>.</p>
+      </div>
+      <Planificateur />
+    </div>
+  </section>
+
+  <!-- 4. Comment se passe la demande -->
+  <section class="bloc conteneur" aria-labelledby="etapes-titre">
+    <div class="entete-bloc">
+      <h2 id="etapes-titre">Comment se passe votre demande de devis</h2>
+    </div>
+    <ol class="etapes">
+      <li><h3>Vous décrivez votre déménagement</h3><p>Dates, villes, type et taille du logement. Trois étapes courtes, environ deux minutes.</p></li>
+      <li><h3>Un conseiller vous rappelle</h3><p>Au créneau que vous avez choisi, pour préciser le volume, les accès et les contraintes de votre mutation.</p></li>
+      <li><h3>Vous recevez votre devis</h3><p>Détaillé et sans engagement. Vous comparez et décidez à votre rythme.</p></li>
+    </ol>
+    <a class="bouton bouton-principal" href="/demande-de-devis/">Demander mes devis</a>
+  </section>
+
+  <!-- 5. Sources -->
+  <section class="bloc bloc-clair" aria-labelledby="sources-titre" id="sources">
+    <div class="conteneur sources">
+      <div>
+        <h2 id="sources-titre">Sources officielles</h2>
+        <p class="lecture">Nos guides s’appuient sur ces textes et pages officielles. En cas de différence avec nos explications, ce sont eux qui font foi.</p>
+      </div>
+      <ul class="sources-liste">
+        {sources.map((s) => (
+          <li>
+            <a href={s.url} rel="noopener" target="_blank">{s.titre}</a>
+            <span class="sources-editeur">{s.editeur}</span>
+            <span class="sources-resume">{s.resume}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {derniers.length > 0 && (
+    <section class="bloc conteneur" aria-labelledby="articles-titre">
+      <div class="entete-bloc entete-ligne">
+        <h2 id="articles-titre">Derniers articles</h2>
+        <a href="/articles/">Tous les articles</a>
+      </div>
+      <div class="articles-grille">{derniers.map((a) => <CarteArticle article={a} />)}</div>
+    </section>
+  )}
+
+  <!-- 6. FAQ -->
+  <section class="bloc conteneur" aria-labelledby="faq-titre">
+    <h2 id="faq-titre">Questions fréquentes</h2>
+    <div class="faq">
+      {faq.slice(0, 5).map((f) => (
+        <details>
+          <summary>{f.q}</summary>
+          <p class="lecture">{f.r}</p>
+        </details>
+      ))}
+    </div>
+    <p><a href="/faq/">Voir toutes les questions</a></p>
+  </section>
+
+  <!-- 7. Relance finale -->
+  <section class="bloc-final" aria-labelledby="final-titre">
+    <div class="conteneur final-in">
+      <div>
+        <h2 id="final-titre">Votre date de mutation est connue&nbsp;?</h2>
+        <p class="lecture">Plus la demande est faite tôt, plus vous avez le choix des dates. Pendant la période des mutations d’été, les plannings des déménageurs se remplissent vite.</p>
+      </div>
+      <FormulaireRapide id="final" titre="Commencez votre demande" />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { background: linear-gradient(180deg, var(--doux) 0%, var(--fond) 100%); border-bottom: 1px solid var(--ligne); }
+  .hero-in { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; padding-block: clamp(2.2rem, 5vw, 4.5rem); }
+  .hero h1 { max-width: 15ch; }
+  .hero-intro { font-size: 1.22rem; max-width: 42ch; color: var(--encre-douce); margin-top: 1rem; }
+  .hero-points { list-style: none; margin: 1.6rem 0 0; padding: 0; display: grid; gap: .7rem; max-width: 46ch; }
+  .hero-points li { position: relative; padding-left: 2rem; }
+  .hero-points li::before { content: ""; position: absolute; left: 0; top: .25em; width: 1.2rem; height: 1.2rem; border-radius: 50%; background: var(--primaire); }
+  .hero-points li::after { content: ""; position: absolute; left: .38rem; top: .5em; width: .45rem; height: .25rem; border-left: 2px solid #fff; border-bottom: 2px solid #fff; rotate: -45deg; }
+
+  .bloc { padding-block: clamp(2.8rem, 6vw, 4.5rem); }
+  .entete-bloc { max-width: 60ch; margin-bottom: 1.8rem; }
+  .entete-bloc p { color: var(--encre-douce); }
+
+  .parcours { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; position: relative; }
+  .parcours::before { content: ""; position: absolute; left: 1.2rem; right: 1.2rem; top: 21px; border-top: 2px dashed var(--pointilles); }
+  .parcours li { position: relative; padding-top: 2.6rem; }
+  .parcours li::before { content: ""; position: absolute; left: 1.2rem; top: 13px; width: 18px; height: 18px; border-radius: 50%; background: var(--fond); border: 2px solid var(--primaire); }
+  .parcours li:has(a:hover)::before { background: var(--primaire); }
+  .parcours a { display: grid; gap: .35rem; height: 100%; padding: 1.1rem 1.2rem; border-radius: 12px; background: var(--surface); border: 1px solid var(--ligne); text-decoration: none; color: var(--encre); transition: border-color .15s; }
+  .parcours a:hover { border-color: var(--primaire); }
+  .parcours-situation { font-weight: 700; font-size: 1.1rem; color: var(--primaire); line-height: 1.25; }
+  .parcours-texte { font-family: var(--f-lecture); color: var(--encre-douce); line-height: 1.45; }
+
+  .bloc-clair { background: var(--surface); border-block: 1px solid var(--ligne); }
+  .outil { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+  .outil-intro { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 100px); }
+  .outil :global(.planif) { background: var(--fond); }
+
+  .etapes { list-style: none; padding: 0; margin: 0 0 2rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; counter-reset: e; }
+  .etapes li { counter-increment: e; }
+  .etapes li::before { content: counter(e); display: grid; place-items: center; width: 2.4rem; height: 2.4rem; border-radius: 50%; background: var(--primaire); color: #fff; font-weight: 700; margin-bottom: .9rem; }
+  .etapes p { color: var(--encre-douce); font-family: var(--f-lecture); margin: 0; }
+
+  .sources { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(2rem, 5vw, 4rem); }
+  .sources-liste { list-style: none; margin: 0; padding: 0; }
+  .sources-liste li { display: grid; gap: .1rem; padding: 1rem 0; border-bottom: 1px solid var(--ligne); }
+  .sources-liste li:first-child { padding-top: 0; }
+  .sources-liste a { font-weight: 700; font-size: 1.05rem; }
+  .sources-editeur { font-size: .92rem; font-weight: 500; }
+  .sources-resume { font-family: var(--f-lecture); color: var(--encre-douce); }
+
+  .entete-ligne { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; max-width: none; }
+  .articles-grille { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+  @media (max-width: 900px) { .articles-grille { grid-template-columns: 1fr; } }
+  .faq { max-width: var(--mesure); margin: 1.2rem 0; }
+  details { border-bottom: 1px solid var(--ligne); padding: .9rem 0; }
+  summary { cursor: pointer; font-weight: 600; font-size: 1.08rem; }
+  details p { margin: .6rem 0 0; color: var(--encre-douce); }
+
+  .bloc-final { background: var(--primaire); color: #fff; padding-block: clamp(2.8rem, 6vw, 4.5rem); }
+  .final-in { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+  .bloc-final h2 { color: #fff; }
+  .bloc-final p { color: var(--sur-fonce-doux); max-width: 46ch; }
+  .bloc-final :global(.rapide) { color: var(--encre); border-top-color: var(--doux); }
+
+  @media (max-width: 1100px) { .parcours { grid-template-columns: repeat(2, 1fr); } .parcours::before { display: none; } .parcours li { padding-top: 0; } .parcours li::before { display: none; } }
+  @media (max-width: 900px) {
+    .hero-in, .outil, .sources, .final-in { grid-template-columns: 1fr; }
+    .outil-intro { position: static; }
+    .etapes { grid-template-columns: 1fr; gap: 1.4rem; }
+  }
+  @media (max-width: 560px) {
+    .parcours { grid-template-columns: 1fr; }
+    .hero-points { display: none; }
+    .hero-intro { font-size: 1.1rem; }
+  }
+</style>

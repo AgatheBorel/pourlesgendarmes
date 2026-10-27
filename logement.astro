@@ -1,0 +1,88 @@
+---
+import Article from '../layouts/Article.astro';
+import BlocDevis from '../components/BlocDevis.astro';
+const toc = [
+  { id: 'principe', label: 'Le logement des gendarmes' },
+  { id: 'avant', label: 'Avant de partir' },
+  { id: 'sortie', label: 'L’état des lieux de sortie' },
+  { id: 'acces', label: 'L’accès du camion en caserne' },
+  { id: 'arrivee', label: 'À l’arrivée' },
+  { id: 'hors-caserne', label: 'Si vous n’êtes pas logé en caserne' },
+  { id: 'garde-meubles', label: 'Logement pas encore disponible' },
+  { id: 'assurance', label: 'Assurance habitation' },
+];
+const schema = { '@context': 'https://schema.org', '@type': 'Article', headline: 'Mutation et logement en gendarmerie : quitter son logement et s’installer dans le nouveau', inLanguage: 'fr-FR', dateModified: '2026-10-19' };
+---
+<Article title="Logement et mutation en gendarmerie : sortie, arrivée, caserne"
+         h1="Mutation et logement en gendarmerie : quitter son logement et s’installer dans le nouveau"
+         description="Logement en caserne, état des lieux de sortie et d'entrée, accès du camion de déménagement, garde-meubles, assurance : le guide logement du gendarme muté."
+         chapo="Changer d’affectation, c’est presque toujours changer de logement. Voici comment préparer la sortie, organiser le déménagement en caserne et bien démarrer dans le nouveau logement."
+         maj="19 octobre 2026" toc={toc} rubrique={{ label: 'Guides', href: '/#situations-titre' }} schema={schema}>
+
+  <h2 id="principe">Le logement des gendarmes, en bref</h2>
+  <p>En gendarmerie, le logement est en règle générale fourni par l’administration, au titre d’une concession de logement par nécessité absolue de service. La plupart des gendarmes sont ainsi logés en caserne, avec leur famille, près de leur lieu de service.</p>
+  <p>Les règles précises (attribution, charges qui restent à votre charge, possibilité de loger hors caserne) dépendent de votre situation et de votre unité&nbsp;: c’est le service gestionnaire du logement qui vous renseigne.</p>
+
+  <h2 id="avant">Avant de partir&nbsp;: les bonnes questions à poser</h2>
+  <p>Dès que la mutation est connue, contactez votre future unité pour savoir&nbsp;:</p>
+  <ul>
+    <li>quel logement vous sera attribué, sa surface et le nombre de pièces, pour savoir ce que vous pourrez y faire entrer&nbsp;;</li>
+    <li>à partir de quelle date il sera disponible, et la date de l’état des lieux d’entrée&nbsp;;</li>
+    <li>s’il y a une cave, un garage ou un local pour les vélos&nbsp;;</li>
+    <li>quelles sont les conditions d’accès pour le camion de déménagement (voir plus bas).</li>
+  </ul>
+  <p>Si le nouveau logement est plus petit, triez avant de faire chiffrer votre déménagement&nbsp;: c’est autant de volume en moins.</p>
+
+  <h2 id="sortie">L’état des lieux de sortie</h2>
+  <p>Prenez rendez-vous tôt avec le service gestionnaire, idéalement deux à trois semaines avant le départ, car les créneaux sont recherchés pendant la période des mutations.</p>
+  <ul>
+    <li><strong>Nettoyez</strong> le logement, y compris les placards, le four, les sanitaires et les vitres.</li>
+    <li><strong>Réparez</strong> ce qui peut l’être&nbsp;: trous de chevilles, ampoules, joints.</li>
+    <li><strong>Relevez les compteurs</strong> le jour du départ et photographiez-les.</li>
+    <li><strong>Rassemblez les clés</strong> et badges à rendre.</li>
+    <li><strong>Gardez une copie signée</strong> de l’état des lieux.</li>
+  </ul>
+  <p>Organisez le déménagement pour que le logement soit vide avant l’état des lieux&nbsp;: pas de carton oublié dans la cave.</p>
+
+  <h2 id="acces">L’accès du camion de déménagement en caserne</h2>
+  <p>Une caserne n’est pas une rue ordinaire. Pour éviter un camion bloqué à l’entrée le jour J, renseignez-vous auprès de votre unité, au départ comme à l’arrivée, puis transmettez ces informations à votre déménageur&nbsp;:</p>
+  <ul>
+    <li>les horaires auxquels les véhicules peuvent entrer&nbsp;;</li>
+    <li>les formalités d’accès (contrôle à l’entrée, identité des déménageurs, immatriculation du camion), à anticiper&nbsp;;</li>
+    <li>la possibilité pour un poids lourd de circuler et de stationner près du bâtiment&nbsp;: largeur des voies, place de stationnement&nbsp;;</li>
+    <li>la personne à prévenir le jour du déménagement.</li>
+  </ul>
+  <div class="encart">
+    <p class="encart-titre">À savoir</p>
+    <p>L’entrée en caserne est soumise à des règles de sécurité qui varient d’un site à l’autre. Prévenez votre déménageur à l’avance pour qu’il prévoie les formalités et le temps nécessaire.</p>
+  </div>
+
+  <BlocDevis titre="Un déménagement en caserne à organiser ?" texte="Indiquez-le dans votre demande : le conseiller en tient compte pour préparer l’accès et le volume avec vous." />
+
+  <h2 id="arrivee">À l’arrivée&nbsp;: l’état des lieux d’entrée</h2>
+  <ul>
+    <li>Faites l’état des lieux d’entrée avant que les meubles soient installés, si possible.</li>
+    <li>Photographiez chaque pièce, les murs, les sols et les équipements.</li>
+    <li>Notez tout défaut, même petit&nbsp;: il ne pourra pas vous être reproché à votre départ.</li>
+    <li>Testez le chauffage, l’eau chaude, les prises et les volets.</li>
+    <li>Ouvrez les contrats d’énergie et d’internet à votre nom si cela vous revient.</li>
+  </ul>
+
+  <h2 id="hors-caserne">Si vous n’êtes pas logé en caserne</h2>
+  <p>Lorsque aucun logement n’est disponible en caserne, ou selon votre situation, vous pouvez être logé à l’extérieur. Les règles applicables (bail, prise en charge, démarches) varient&nbsp;: demandez-les par écrit au service gestionnaire avant de vous engager.</p>
+  <p>Pour un logement que vous louez vous-même, pensez au préavis de votre bail actuel et à l’état des lieux avec le propriétaire.</p>
+
+  <h2 id="garde-meubles">Si le nouveau logement n’est pas encore disponible</h2>
+  <p>Il arrive que le logement ne soit pas libre à votre arrivée. Deux solutions sont courantes&nbsp;:</p>
+  <ul>
+    <li><strong>le garde-meubles</strong>&nbsp;: vos biens sont stockés le temps nécessaire, puis livrés&nbsp;;</li>
+    <li><strong>le déménagement en deux temps</strong>&nbsp;: une partie des affaires suit tout de suite, le reste plus tard.</li>
+  </ul>
+  <p>Avant de choisir, vérifiez auprès de votre service gestionnaire ce qui est pris en charge et ce qui reste à vos frais, en particulier la location du garde-meubles.</p>
+
+  <h2 id="assurance">L’assurance habitation</h2>
+  <p>Même dans un logement fourni par l’administration, vos biens et votre responsabilité doivent être assurés. Prévenez votre assureur de votre changement d’adresse et vérifiez que le contrat couvre bien le type de logement que vous occupez.</p>
+  <p>Pour le déménagement lui-même, regardez la garantie proposée par le déménageur et la déclaration de valeur de vos biens&nbsp;: elle détermine l’indemnisation en cas de casse.</p>
+
+  <BlocDevis />
+</Article>

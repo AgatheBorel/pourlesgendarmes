@@ -1,0 +1,43 @@
+---
+import Logo from './Logo.astro';
+const annee = new Date().getFullYear();
+---
+<footer class="pied">
+  <div class="conteneur pied-in">
+    <div>
+      <p class="pied-titre"><Logo fonce /></p>
+      <p>
+        Site d'information indépendant, non affilié à la Gendarmerie nationale ni au ministère de l'Intérieur.
+        Les informations sont données à titre indicatif : seuls les textes officiels et les consignes de votre unité font foi.
+        Ce site est édité par une entreprise de déménagement (voir les <a href="/mentions-legales/">mentions légales</a>).
+      </p>
+    </div>
+    <nav aria-label="Liens de pied de page">
+      <ul>
+        <li><a href="/demenagement/">Le guide du déménagement</a></li>
+        <li><a href="/guide-mutation/">Guide de la mutation</a></li>
+        <li><a href="/logement/">Logement</a></li>
+        <li><a href="/prise-en-charge-demenagement/">Prise en charge du déménagement</a></li>
+        <li><a href="/mutation-en-famille/">Muter en famille</a></li>
+        <li><a href="/articles/">Articles</a></li>
+        <li><a href="/faq/">Questions fréquentes</a></li>
+        <li><a href="/#sources">Sources officielles</a></li>
+        <li><a href="/demande-de-devis/">Demande de devis</a></li>
+        <li><a href="/mentions-legales/">Mentions légales</a></li>
+        <li><a href="/confidentialite/">Données personnelles</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="conteneur pied-bas"><p>© {annee} Pour les gendarmes</p></div>
+</footer>
+<style>
+  .pied { background: var(--encre); color: var(--pied-texte); margin-top: 5rem; }
+  .pied a { color: var(--pied-texte); }
+  .pied-in { display: grid; grid-template-columns: 1.5fr 1fr; gap: 3rem; padding-block: 3rem 2rem; }
+  .pied-titre { font: 700 1.2rem/1.2 var(--f-ui); color: #fff; }
+  .pied-in p:not(.pied-titre) { max-width: 62ch; font-size: .98rem; }
+  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .5rem; }
+  .pied-bas { border-top: 1px solid var(--pied-ligne); padding-block: 1.2rem; font-size: .9rem; color: var(--pied-discret); }
+  .pied-bas p { margin: 0; }
+  @media (max-width: 760px) { .pied-in { grid-template-columns: 1fr; gap: 2rem; } }
+</style>

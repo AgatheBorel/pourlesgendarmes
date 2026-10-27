@@ -1,0 +1,115 @@
+---
+import Base from './Base.astro';
+import { site } from '../data/site';
+
+interface Props {
+  title: string; h1?: string; description?: string; maj?: string; noindex?: boolean;
+  schema?: object | object[]; chapo?: string;
+  toc?: { id: string; label: string }[];
+  rubrique?: { label: string; href: string };
+  aside?: boolean;
+  libelleSommaire?: string;
+}
+const { title, h1 = title, description, maj, noindex, schema, chapo, toc = [], rubrique, aside = true, libelleSommaire = 'Dans ce guide' } = Astro.props;
+const fil = { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+  { '@type': 'ListItem', position: 1, name: 'Accueil', item: site.url + '/' },
+  ...(rubrique ? [{ '@type': 'ListItem', position: 2, name: rubrique.label, item: site.url + rubrique.href }] : []),
+  { '@type': 'ListItem', position: rubrique ? 3 : 2, name: h1, item: new URL(Astro.url.pathname, site.url).href },
+]};
+const schemas = [fil, ...(schema ? (Array.isArray(schema) ? schema : [schema]) : [])];
+const avecAside = aside && !noindex;
+---
+<Base title={title} description={description} noindex={noindex} schema={schemas}>
+  <div class="conteneur article-grille" class:list={{ 'sans-aside': !avecAside }}>
+    <article class="article">
+      <nav class="fil" aria-label="Fil d'Ariane">
+        <a href="/">Accueil</a>
+        {rubrique && <><span aria-hidden="true">/</span><a href={rubrique.href}>{rubrique.label}</a></>}
+      </nav>
+      <h1>{h1}</h1>
+      {maj && <p class="maj">Mis à jour le {maj}</p>}
+      {chapo && <p class="chapo">{chapo}</p>}
+      {toc.length > 0 && (
+        <details class="sommaire-mobile">
+          <summary>Sommaire</summary>
+          <ol>{toc.map((t) => <li><a href={`#${t.id}`}>{t.label}</a></li>)}</ol>
+        </details>
+      )}
+      <div class="corps"><slot /></div>
+    </article>
+
+    {avecAside && (
+      <aside class="aside">
+        <div class="aside-colle">
+          {toc.length > 0 && (
+            <nav aria-label="Sommaire de la page" class="sommaire">
+              <p class="sommaire-titre">{libelleSommaire}</p>
+              <ol>{toc.map((t) => <li><a href={`#${t.id}`}>{t.label}</a></li>)}</ol>
+            </nav>
+          )}
+          <div class="aside-devis">
+            <p class="aside-devis-titre">Faire chiffrer votre déménagement</p>
+            <p>Gratuit, sans engagement, rappel au créneau de votre choix.</p>
+            <a class="bouton bouton-principal" href="/demande-de-devis/">Demander mes devis</a>
+          </div>
+        </div>
+      </aside>
+    )}
+  </div>
+</Base>
+<style>
+  .article-grille { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: clamp(2rem, 5vw, 4.5rem); padding-block: clamp(1.5rem, 4vw, 3rem) 1rem; }
+  .article-grille.sans-aside { grid-template-columns: minmax(0, 1fr); }
+  .fil { display: flex; gap: .5rem; flex-wrap: wrap; font-size: .92rem; color: var(--encre-douce); margin-bottom: 1.2rem; }
+  .fil a { color: var(--encre-douce); }
+  .article h1 { max-width: 24ch; font-size: clamp(2rem, 4.4vw, 3.2rem); }
+  .maj { color: var(--encre-douce); font-size: .95rem; }
+  .chapo { font-family: var(--f-lecture); font-size: 1.3rem; line-height: 1.55; color: var(--encre-douce); max-width: var(--mesure); }
+  .corps { max-width: var(--mesure); font-family: var(--f-lecture); font-size: 1.125rem; line-height: 1.7; }
+  .corps :global(h2) { margin-top: 2.6rem; font-size: clamp(1.4rem, 2.6vw, 1.85rem); scroll-margin-top: 90px; }
+  .corps :global(h3) { margin-top: 1.6rem; }
+  .corps :global(ul), .corps :global(ol) { padding-left: 1.3rem; }
+  .corps :global(li) { margin-bottom: .45rem; }
+  .corps :global(.bouton) { font-family: var(--f-ui); }
+  .corps :global(.encart) { background: var(--surface); border: 1px solid var(--ligne); border-left: 4px solid var(--primaire); border-radius: var(--r); padding: 1.1rem 1.3rem; margin: 2rem 0; font-size: 1.05rem; }
+  .corps :global(.encart p:last-child) { margin-bottom: 0; }
+  .corps :global(.encart-titre) { font-family: var(--f-ui); font-weight: 700; margin-bottom: .3rem; }
+  .corps :global(.a-completer) { background: #FFF3C4; outline: 1px dashed #B8860B; }
+  .corps :global(.contains-task-list) { list-style: none; padding-left: 0; }
+  .corps :global(.task-list-item) { display: flex; gap: .7rem; align-items: baseline; padding: .35rem 0; border-bottom: 1px dashed var(--ligne); margin: 0; }
+  .corps :global(.task-list-item input) { width: 1.1rem; height: 1.1rem; accent-color: var(--primaire); flex: none; translate: 0 .15rem; }
+  .corps :global(blockquote) { margin: 1.5rem 0; padding: .9rem 1.2rem; background: var(--surface); border-left: 4px solid var(--pointilles); border-radius: 0 var(--r) var(--r) 0; font-style: italic; }
+  .corps :global(.source) { font-size: .95rem; color: var(--encre-douce); }
+
+  .aside-colle { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 92px); display: grid; gap: 1.5rem; }
+  .sommaire-titre, .aside-devis-titre { font-weight: 700; margin-bottom: .6rem; }
+  .sommaire ol { list-style: none; margin: 0; padding: 0; border-left: 2px solid var(--ligne); }
+  .sommaire li a { display: block; padding: .35rem 0 .35rem 1rem; margin-left: -2px; border-left: 2px solid transparent; color: var(--encre-douce); text-decoration: none; font-size: .95rem; line-height: 1.35; }
+  .sommaire li a:hover, .sommaire li a.actif { color: var(--primaire); border-left-color: var(--primaire); }
+  .aside-devis { background: var(--surface); border: 1px solid var(--ligne); border-top: 4px solid var(--primaire); border-radius: 12px; padding: 1.2rem; }
+  .aside-devis p:not(.aside-devis-titre) { font-size: .95rem; color: var(--encre-douce); }
+  .aside-devis .bouton { width: 100%; }
+
+  .sommaire-mobile { display: none; }
+  @media (max-width: 960px) {
+    .article-grille { grid-template-columns: minmax(0, 1fr); }
+    .aside { display: none; }
+    .sommaire-mobile { display: block; background: var(--surface); border: 1px solid var(--ligne); border-radius: var(--r); padding: .8rem 1rem; margin: 1.2rem 0 0; max-width: var(--mesure); }
+    .sommaire-mobile summary { font-weight: 700; cursor: pointer; }
+    .sommaire-mobile ol { margin: .6rem 0 0; padding-left: 1.2rem; }
+    .sommaire-mobile li { margin-bottom: .35rem; }
+  }
+</style>
+<script>
+  // Surligne la section en cours dans le sommaire.
+  const liens = Array.from(document.querySelectorAll<HTMLAnchorElement>('.sommaire a'));
+  const sections = liens.map((a) => document.getElementById(a.hash.slice(1))).filter(Boolean) as HTMLElement[];
+  if (sections.length && 'IntersectionObserver' in window) {
+    const obs = new IntersectionObserver((entrees) => {
+      entrees.forEach((e) => {
+        if (e.isIntersecting) liens.forEach((a) => a.classList.toggle('actif', a.hash === '#' + e.target.id));
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach((s) => obs.observe(s));
+  }
+</script>

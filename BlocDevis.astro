@@ -1,0 +1,18 @@
+---
+// Appel à l'action contextuel en fin de guide.
+interface Props { titre?: string; texte?: string; }
+const { titre = 'Votre date de mutation est connue ?', texte = "Faites chiffrer votre déménagement dès maintenant : plus la demande est faite tôt, plus vous avez le choix des dates, surtout pendant la période des mutations d'été." } = Astro.props;
+---
+<aside class="bloc-devis" aria-label="Demande de devis">
+  <div>
+    <p class="bloc-devis-titre">{titre}</p>
+    <p class="bloc-devis-texte">{texte}</p>
+  </div>
+  <a class="bouton bouton-principal" href="/demande-de-devis/">Demander mes devis</a>
+</aside>
+<style>
+  .bloc-devis { display: grid; grid-template-columns: 1fr auto; gap: 1.2rem 2rem; align-items: center; background: var(--doux); border-radius: 14px; padding: 1.5rem 1.6rem; margin: 2.5rem 0; font-family: var(--f-ui); }
+  .bloc-devis-titre { font-weight: 700; font-size: 1.2rem; margin-bottom: .3rem; color: var(--encre); }
+  .bloc-devis-texte { margin: 0; color: var(--primaire-fonce); font-size: 1rem; line-height: 1.5; }
+  @media (max-width: 640px) { .bloc-devis { grid-template-columns: 1fr; } .bloc-devis .bouton { width: 100%; } }
+</style>

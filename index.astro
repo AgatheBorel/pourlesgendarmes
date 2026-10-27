@@ -1,0 +1,9 @@
+---
+import ListeArticles from '../../components/ListeArticles.astro';
+import { articlesPublies } from '../../lib/articles';
+const articles = await articlesPublies();
+---
+<ListeArticles titre="Articles et conseils pour les gendarmes mutés"
+  intro="Mutation, logement, déménagement, vie de famille : nos articles pratiques pour préparer chaque étape."
+  description="Articles pratiques pour les gendarmes mutés : mutation, logement en caserne, déménagement, démarches en famille, outre-mer."
+  articles={articles} />

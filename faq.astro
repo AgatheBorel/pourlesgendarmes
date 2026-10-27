@@ -1,0 +1,14 @@
+---
+import Article from '../layouts/Article.astro';
+import { faq } from '../data/faq';
+const schema = { '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.r } })) };
+---
+<Article title="Questions fréquentes sur le déménagement des gendarmes" h1="Questions fréquentes"
+         description="Délais, devis, objets de valeur, livraison : les réponses aux questions des gendarmes qui préparent leur déménagement."
+         schema={schema}>
+  {faq.map((f) => (<><h2>{f.q}</h2><p>{f.r}</p></>))}
+  <div class="encart">
+    <p><strong>Votre question n'est pas dans la liste&nbsp;?</strong> Posez-la dans le champ « Précisions » de la <a href="/demande-de-devis/">demande de devis</a> : un conseiller vous répond lors de son appel.</p>
+  </div>
+</Article>

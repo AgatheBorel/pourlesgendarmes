@@ -1,0 +1,85 @@
+---
+// Rétroplanning de mutation : l'élément interactif de l'accueil.
+// Repères de bonnes pratiques, pas des délais réglementaires.
+export const etapes = [
+  { j: 90, quand: '3 mois avant', titre: "Dès l'annonce de la mutation", texte: "Rassemblez votre ordre de mutation et les pièces de votre dossier. Renseignez-vous auprès de votre future unité sur le logement à l'arrivée." },
+  { j: 60, quand: '2 mois avant', titre: 'Demandez vos devis de déménagement', texte: "Le plus tôt possible : l'été, période des mutations, les plannings des déménageurs se remplissent vite.", cta: true },
+  { j: 45, quand: '6 semaines avant', titre: 'Organisez la vie de famille', texte: "Inscriptions à l'école ou à la crèche, transfert des contrats : énergie, internet, assurance habitation." },
+  { j: 30, quand: '1 mois avant', titre: 'Triez avant de faire les cartons', texte: "Donnez, vendez, jetez. Moins de volume, c'est un déménagement plus simple et plus rapide." },
+  { j: 15, quand: '2 semaines avant', titre: "Fixez l'état des lieux de sortie", texte: "Prenez rendez-vous avec le service gestionnaire de votre logement et prévoyez le nettoyage." },
+  { j: 7, quand: '1 semaine avant', titre: 'Préparez le carton du premier soir', texte: "Papiers importants, objets de valeur, médicaments et chargeurs voyagent avec vous, pas dans le camion." },
+  { j: 0, quand: 'Le jour J', titre: 'À la livraison, vérifiez tout', texte: "Contrôlez l'inventaire et notez vos réserves éventuelles sur le bon de livraison avant de signer." },
+];
+---
+<section class="planif" aria-labelledby="planif-titre">
+  <h2 id="planif-titre" class="planif-titre">Votre rétroplanning de mutation</h2>
+  <div class="champ planif-champ">
+    <label for="date-poste">Date de prise de votre nouveau poste</label>
+    <input type="date" id="date-poste" name="date-poste" />
+    <small>Rien n'est enregistré : le calcul se fait dans votre navigateur.</small>
+  </div>
+  <ol class="planif-liste" id="planif-liste">
+    {etapes.map((e) => (
+      <li data-j={e.j}>
+        <span class="planif-quand">{e.quand}</span>
+        <span class="planif-etape">{e.titre}</span>
+        <span class="planif-texte">{e.texte}</span>
+        {e.cta && <a class="planif-cta" href="/demande-de-devis/">Faire ma demande de devis</a>}
+      </li>
+    ))}
+  </ol>
+  <p class="planif-note">Repères indicatifs, à adapter à vos délais et aux consignes de votre unité.</p>
+</section>
+
+<script>
+  const input = document.getElementById('date-poste') as HTMLInputElement | null;
+  const items = Array.from(document.querySelectorAll<HTMLLIElement>('#planif-liste li'));
+  const libelles = items.map((li) => li.querySelector('.planif-quand')!.textContent);
+  const fmt = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long' });
+
+  function maj() {
+    if (!input) return;
+    const valeur = input.value ? new Date(input.value + 'T12:00:00') : null;
+    const auj = new Date(); auj.setHours(12, 0, 0, 0);
+    let courant: HTMLLIElement | null = null;
+    items.forEach((li, i) => {
+      li.classList.remove('passe', 'maintenant');
+      const quand = li.querySelector('.planif-quand')!;
+      if (!valeur || isNaN(valeur.getTime())) { quand.textContent = libelles[i]; return; }
+      const d = new Date(valeur); d.setDate(d.getDate() - Number(li.dataset.j));
+      quand.textContent = (Number(li.dataset.j) === 0 ? 'Le ' : 'Vers le ') + fmt.format(d);
+      if (d < auj) li.classList.add('passe');
+      else if (!courant) courant = li;
+    });
+    // L'étape en cours = la dernière étape déjà échue (on est dedans), sinon la première à venir.
+    const passes = items.filter((li) => li.classList.contains('passe'));
+    const cible = passes.length && passes.length < items.length ? passes[passes.length - 1] : courant;
+    if (cible) { cible.classList.remove('passe'); cible.classList.add('maintenant'); }
+  }
+  input?.addEventListener('change', maj);
+  input?.addEventListener('input', maj);
+</script>
+
+<style>
+  .planif { background: var(--surface); border: 1px solid var(--ligne); border-radius: 14px; padding: clamp(1.3rem, 3vw, 2rem); }
+  .planif-titre { font-size: 1.4rem; margin-bottom: 1rem; }
+  .planif-champ input { max-width: 15rem; }
+  .planif-liste { list-style: none; margin: 1.4rem 0 0; padding: 0; position: relative; }
+  .planif-liste::before { content: ""; position: absolute; left: 7px; top: 10px; bottom: 10px; border-left: 2px dashed var(--pointilles); }
+  .planif-liste li { display: grid; grid-template-columns: 9rem 1fr; column-gap: 1rem; padding: 0 0 1.15rem 2rem; position: relative; }
+  .planif-liste li::before { content: ""; position: absolute; left: 0; top: .3rem; width: 16px; height: 16px; border-radius: 50%; background: var(--surface); border: 2px solid var(--primaire); }
+  .planif-liste li:last-child::before { background: var(--primaire); }
+  .planif-quand { grid-row: span 3; font-weight: 600; font-size: .92rem; color: var(--primaire); padding-top: .1rem; }
+  .planif-etape { font-weight: 700; line-height: 1.3; }
+  .planif-texte { font-family: var(--f-lecture); font-size: 1rem; color: var(--encre-douce); line-height: 1.5; }
+  .planif-cta { font-weight: 600; font-size: .95rem; margin-top: .3rem; justify-self: start; }
+  .planif-liste li.passe { opacity: .45; }
+  .planif-liste li.passe::before { background: var(--pointilles); border-color: var(--pointilles); }
+  .planif-liste li.maintenant::before { background: var(--primaire); box-shadow: 0 0 0 5px var(--doux); }
+  .planif-liste li.maintenant .planif-etape::before { content: "Vous êtes ici"; display: block; width: fit-content; margin-bottom: .25rem; padding: .05rem .5rem; background: var(--doux); color: var(--primaire-fonce); border-radius: 4px; font-size: .8rem; font-weight: 600; }
+  .planif-note { font-size: .9rem; color: var(--encre-douce); margin: .4rem 0 0; }
+  @media (max-width: 560px) {
+    .planif-liste li { grid-template-columns: 1fr; }
+    .planif-quand { grid-row: auto; }
+  }
+</style>

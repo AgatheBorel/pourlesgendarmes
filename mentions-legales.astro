@@ -1,0 +1,27 @@
+---
+import Article from '../layouts/Article.astro';
+import { site } from '../data/site';
+const e = site.editor;
+---
+<Article title="Mentions légales" noindex>
+  <h2>Éditeur</h2>
+  <p>
+    Le site {site.domain} est édité par {e.name}, {e.legalForm} au capital de {e.capital},
+    immatriculée au RCS de {e.rcs} sous le numéro {e.siren}.<br />
+    Siège social : {e.address}<br />
+    Téléphone : {e.phone} · E-mail : {e.email}
+  </p>
+  <p>Directeur de la publication : {e.publicationDirector}</p>
+
+  <h2>Site indépendant</h2>
+  <p>Ce site n'est pas un site officiel. Il n'est ni édité, ni validé, ni sponsorisé par la Gendarmerie nationale ou le ministère de l'Intérieur. Les informations publiées le sont à titre indicatif ; seuls les textes officiels font foi.</p>
+
+  <h2>Hébergeur</h2>
+  <p>{site.host.name}, {site.host.address}. Téléphone : {site.host.phone}.</p>
+
+  <h2>Propriété intellectuelle</h2>
+  <p>Les textes, visuels et éléments graphiques de ce site sont la propriété de {e.name}, sauf mention contraire. Toute reproduction sans autorisation est interdite.</p>
+
+  <h2>Données personnelles</h2>
+  <p>Voir la page <a href="/confidentialite/">Données personnelles</a>.</p>
+</Article>

@@ -1,0 +1,286 @@
+---
+import Base from '../layouts/Base.astro';
+const erreurs: Record<string, string> = {
+  envoi: "Votre demande n'a pas pu être envoyée. Vérifiez les champs signalés, puis réessayez.",
+  frequence: 'Trop de demandes envoyées depuis cette connexion. Réessayez dans une heure.',
+};
+---
+<Base barreMobile={false} title="Demande de devis de déménagement pour gendarmes"
+      description="Demandez gratuitement votre devis de déménagement pour votre mutation en gendarmerie. Trois étapes courtes, sans engagement.">
+  <div class="conteneur page-devis">
+    <div class="devis-intro">
+      <h1>Votre devis de déménagement</h1>
+      <p>Gratuit et sans engagement. Trois étapes courtes, environ deux minutes.</p>
+      <ul class="rassurance">
+        <li>Un conseiller vous rappelle au créneau que vous choisissez.</li>
+        <li>Votre devis est détaillé : volume, prestations, assurance.</li>
+        <li>Vos informations servent uniquement à établir votre devis. Elles ne sont ni vendues ni cédées.</li>
+      </ul>
+    </div>
+
+    <form id="form-devis" class="formulaire" method="post" action="/api/lead.php" novalidate>
+      <p class="message-erreur" id="erreur-globale" role="alert" hidden></p>
+      <noscript><p class="message-erreur">{erreurs.envoi}</p></noscript>
+
+      <div class="progression" aria-hidden="true"><span id="barre"></span></div>
+      <p class="etape-indicateur" id="etape-indicateur" aria-live="polite">Étape 1 sur 3</p>
+
+      <!-- Étape 1 -->
+      <fieldset class="etape" data-etape="1">
+        <legend><h2>Votre déménagement</h2></legend>
+        <div class="champ">
+          <label for="motif">Motif</label>
+          <select id="motif" name="motif" required>
+            <option value="">Choisissez</option>
+            <option value="mutation">Mutation</option>
+            <option value="retraite">Départ à la retraite ou fin de contrat</option>
+            <option value="autre">Autre déménagement</option>
+          </select>
+        </div>
+        <div class="champ">
+          <label for="date_souhaitee">Mois de déménagement souhaité</label>
+          <input type="month" id="date_souhaitee" name="date_souhaitee" required />
+          <small>Une date approximative suffit.</small>
+        </div>
+        <div class="deux">
+          <div class="champ">
+            <label for="depart_cp">Code postal de départ</label>
+            <input type="text" id="depart_cp" name="depart_cp" inputmode="numeric" autocomplete="off" pattern="[0-9]{5}" maxlength="5" required />
+          </div>
+          <div class="champ">
+            <label for="arrivee_cp">Code postal d'arrivée</label>
+            <input type="text" id="arrivee_cp" name="arrivee_cp" inputmode="numeric" autocomplete="off" pattern="[0-9]{5}" maxlength="5" />
+            <small>Laissez vide si vous ne le connaissez pas encore.</small>
+          </div>
+        </div>
+        <div class="champ case">
+          <input type="checkbox" id="outre_mer" name="outre_mer" value="oui" />
+          <label for="outre_mer">Départ ou arrivée en outre-mer ou à l'étranger</label>
+        </div>
+      </fieldset>
+
+      <!-- Étape 2 -->
+      <fieldset class="etape" data-etape="2">
+        <legend><h2>Votre logement actuel</h2></legend>
+        <div class="champ">
+          <label for="logement">Type de logement</label>
+          <select id="logement" name="logement" required>
+            <option value="">Choisissez</option>
+            <option value="caserne">Logement en caserne (concédé)</option>
+            <option value="appartement">Appartement</option>
+            <option value="maison">Maison</option>
+          </select>
+        </div>
+        <div class="champ">
+          <label for="pieces">Nombre de pièces</label>
+          <select id="pieces" name="pieces" required>
+            <option value="">Choisissez</option>
+            <option value="1">Studio ou 1 pièce</option>
+            <option value="2">2 pièces</option>
+            <option value="3">3 pièces</option>
+            <option value="4">4 pièces</option>
+            <option value="5+">5 pièces ou plus</option>
+          </select>
+        </div>
+        <div class="champ">
+          <label for="volume">Volume estimé en m³ <small>(facultatif)</small></label>
+          <input type="number" id="volume" name="volume" min="1" max="300" inputmode="numeric" />
+          <small>Si vous connaissez votre volume ou vos droits en cubage.</small>
+        </div>
+      </fieldset>
+
+      <!-- Étape 3 -->
+      <fieldset class="etape" data-etape="3">
+        <legend><h2>Vos coordonnées</h2></legend>
+        <div class="deux">
+          <div class="champ">
+            <label for="prenom">Prénom</label>
+            <input type="text" id="prenom" name="prenom" autocomplete="given-name" maxlength="80" required />
+          </div>
+          <div class="champ">
+            <label for="nom">Nom</label>
+            <input type="text" id="nom" name="nom" autocomplete="family-name" maxlength="80" required />
+          </div>
+        </div>
+        <div class="deux">
+          <div class="champ">
+            <label for="telephone">Téléphone</label>
+            <input type="tel" id="telephone" name="telephone" autocomplete="tel" maxlength="20" required />
+          </div>
+          <div class="champ">
+            <label for="email">Adresse e-mail</label>
+            <input type="email" id="email" name="email" autocomplete="email" maxlength="160" required />
+          </div>
+        </div>
+        <div class="champ">
+          <label for="creneau">Quand préférez-vous être rappelé&nbsp;?</label>
+          <select id="creneau" name="creneau">
+            <option value="indifferent">Peu importe</option>
+            <option value="matin">Le matin</option>
+            <option value="midi">Entre 12 h et 14 h</option>
+            <option value="apres-midi">L'après-midi</option>
+            <option value="soir">Après 18 h</option>
+          </select>
+        </div>
+        <div class="champ">
+          <label for="message">Précisions <small>(facultatif)</small></label>
+          <textarea id="message" name="message" rows="3" maxlength="1000"></textarea>
+          <small>Ne mentionnez pas d'information sur votre unité ou votre service.</small>
+        </div>
+        <div class="champ case">
+          <input type="checkbox" id="consentement" name="consentement" value="oui" required />
+          <label for="consentement">
+            J'accepte que l'éditeur du site (<a href="/mentions-legales/" target="_blank" rel="noopener">voir les mentions légales</a>) utilise ces informations pour me recontacter et établir mon devis.
+            <a href="/confidentialite/" target="_blank" rel="noopener">En savoir plus sur mes données</a>
+          </label>
+        </div>
+      </fieldset>
+
+      <!-- Anti-spam : champ piège invisible + horodatage -->
+      <div class="visuellement-cache" aria-hidden="true">
+        <label for="site_web">Ne pas remplir</label>
+        <input type="text" id="site_web" name="site_web" tabindex="-1" autocomplete="off" />
+      </div>
+      <input type="hidden" name="ts" id="ts" />
+      <input type="hidden" name="source" id="source" />
+
+      <div class="navigation">
+        <button type="button" class="bouton bouton-secondaire" id="precedent" hidden>Retour</button>
+        <button type="button" class="bouton bouton-principal" id="suivant">Continuer</button>
+        <button type="submit" class="bouton bouton-principal" id="envoyer">Envoyer ma demande</button>
+      </div>
+    </form>
+  </div>
+
+  <script define:vars={{ erreurs }}>
+    const form = document.getElementById('form-devis');
+    const etapes = [...form.querySelectorAll('.etape')];
+    const btnPrec = document.getElementById('precedent');
+    const btnSuiv = document.getElementById('suivant');
+    const btnEnv = document.getElementById('envoyer');
+    const indic = document.getElementById('etape-indicateur');
+    const barre = document.getElementById('barre');
+    const erreurGlobale = document.getElementById('erreur-globale');
+    let courante = 0;
+
+    document.getElementById('ts').value = String(Date.now());
+    const params = new URLSearchParams(location.search);
+    document.getElementById('source').value = JSON.stringify({
+      utm_source: params.get('utm_source') || '', utm_medium: params.get('utm_medium') || '',
+      utm_campaign: params.get('utm_campaign') || '', referrer: document.referrer || '',
+    });
+    if (params.get('erreur') && erreurs[params.get('erreur')]) {
+      erreurGlobale.textContent = erreurs[params.get('erreur')]; erreurGlobale.hidden = false;
+    }
+
+    ['depart_cp', 'arrivee_cp', 'date_souhaitee'].forEach((k) => {
+      const v = params.get(k);
+      const champ = document.getElementById(k);
+      if (v && champ) champ.value = v.slice(0, 7);
+    });
+
+    form.classList.add('par-etapes');
+    function afficher(i) {
+      etapes.forEach((e, k) => { e.hidden = k !== i; });
+      btnPrec.hidden = i === 0;
+      btnSuiv.hidden = i === etapes.length - 1;
+      btnEnv.hidden = i !== etapes.length - 1;
+      indic.textContent = `Étape ${i + 1} sur ${etapes.length}`;
+      barre.style.width = `${((i + 1) / etapes.length) * 100}%`;
+      courante = i;
+    }
+
+    const messages = {
+      valueMissing: 'Ce champ est obligatoire.',
+      patternMismatch: 'Indiquez un code postal à 5 chiffres.',
+      typeMismatch: 'Vérifiez le format, par exemple nom@exemple.fr.',
+    };
+    function valider(etape) {
+      let premier = null;
+      etape.querySelectorAll('input, select, textarea').forEach((c) => {
+        const ancien = c.closest('.champ')?.querySelector('.message-erreur');
+        ancien?.remove(); c.removeAttribute('aria-invalid'); c.removeAttribute('aria-describedby');
+        let msg = '';
+        if (c.id === 'telephone' && c.value && !/^[+0-9 .()-]{10,20}$/.test(c.value)) msg = 'Indiquez un numéro de téléphone valide.';
+        if (!c.checkValidity()) {
+          const v = c.validity;
+          msg = c.type === 'checkbox' ? 'Cochez cette case pour envoyer votre demande.'
+            : v.valueMissing ? messages.valueMissing : v.patternMismatch ? messages.patternMismatch
+            : v.typeMismatch ? messages.typeMismatch : 'Vérifiez ce champ.';
+        }
+        if (msg) {
+          const p = document.createElement('p');
+          p.className = 'message-erreur'; p.id = `err-${c.id}`; p.textContent = msg;
+          c.closest('.champ').appendChild(p);
+          c.setAttribute('aria-invalid', 'true'); c.setAttribute('aria-describedby', p.id);
+          premier ??= c;
+        }
+      });
+      premier?.focus();
+      return !premier;
+    }
+
+    btnSuiv.addEventListener('click', () => {
+      if (!valider(etapes[courante])) return;
+      afficher(courante + 1);
+      etapes[courante].querySelector('h2').setAttribute('tabindex', '-1');
+      etapes[courante].querySelector('h2').focus();
+    });
+    btnPrec.addEventListener('click', () => afficher(courante - 1));
+
+    form.addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      if (!valider(etapes[courante])) return;
+      btnEnv.disabled = true; btnEnv.textContent = 'Envoi en cours…';
+      erreurGlobale.hidden = true;
+      try {
+        const rep = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+        const data = await rep.json().catch(() => ({}));
+        if (rep.ok && data.ok) { location.href = '/merci/'; return; }
+        erreurGlobale.textContent = data.message || erreurs.envoi;
+      } catch {
+        erreurGlobale.textContent = "Connexion impossible. Vérifiez votre réseau, puis réessayez.";
+      }
+      erreurGlobale.hidden = false; erreurGlobale.focus?.();
+      btnEnv.disabled = false; btnEnv.textContent = 'Envoyer ma demande';
+    });
+
+    afficher(0);
+  </script>
+</Base>
+
+<style>
+  .page-devis { display: grid; grid-template-columns: 1fr 1.4fr; gap: clamp(2rem, 5vw, 5rem); padding-block: clamp(2rem, 5vw, 4rem); align-items: start; }
+  .devis-intro { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 100px); }
+  .devis-intro h1 { font-size: clamp(2rem, 4.2vw, 3.2rem); }
+  .devis-intro > p { font-size: 1.15rem; color: var(--encre-douce); }
+  .rassurance { padding-left: 1.2rem; margin: 1.5rem 0 0; color: var(--encre-douce); }
+  .rassurance li { margin-bottom: .5rem; }
+  .rassurance li::marker { color: var(--primaire); }
+
+  .formulaire { background: var(--surface); border: 1px solid var(--ligne); border-radius: 14px; padding: clamp(1.3rem, 3vw, 2.2rem); }
+  fieldset { border: 0; padding: 0; margin: 0 0 1.5rem; min-width: 0; }
+  legend { padding: 0; margin-bottom: 1rem; }
+  legend h2 { font-size: 1.5rem; margin: 0; }
+  .deux { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1rem; align-items: start; }
+  .case { grid-template-columns: auto 1fr; align-items: start; gap: .7rem; }
+  .case input { width: 1.4rem; height: 1.4rem; margin-top: .15rem; accent-color: var(--primaire); }
+  .case label { font-weight: 400; }
+
+  .progression, .etape-indicateur { display: none; }
+  .par-etapes .progression { display: block; height: 8px; background: var(--ligne); border-radius: 4px; overflow: hidden; margin-bottom: .6rem; }
+  .par-etapes .progression span { display: block; height: 100%; width: 33%; background: var(--primaire); transition: width .25s ease; }
+  .par-etapes .etape-indicateur { display: block; font-size: .92rem; color: var(--encre-douce); margin-bottom: 1.2rem; }
+  .formulaire:not(.par-etapes) #suivant, .formulaire:not(.par-etapes) #precedent { display: none; }
+
+  .navigation { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .navigation .bouton-principal { margin-left: auto; }
+  #erreur-globale { background: #FBEAE8; padding: .8rem 1rem; border-radius: var(--r); }
+  [hidden] { display: none !important; }
+
+  @media (max-width: 900px) {
+    .page-devis { grid-template-columns: 1fr; }
+    .devis-intro { position: static; }
+  }
+  @media (max-width: 520px) { .deux { grid-template-columns: 1fr; } .navigation .bouton { width: 100%; } }
+</style>

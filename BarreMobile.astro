@@ -1,0 +1,32 @@
+---
+// Barre d'action fixe en bas d'écran sur mobile ; masquée quand un formulaire est visible.
+---
+<div class="barre-mobile" id="barre-mobile">
+  <a class="bouton bouton-principal" href="/demande-de-devis/">Demander mes devis gratuits</a>
+</div>
+<script>
+  const barre = document.getElementById('barre-mobile');
+  const cibles = document.querySelectorAll('form, .bloc-devis');
+  if (barre && 'IntersectionObserver' in window && cibles.length) {
+    const visibles = new Set();
+    const obs = new IntersectionObserver((entrees) => {
+      entrees.forEach((e) => (e.isIntersecting ? visibles.add(e.target) : visibles.delete(e.target)));
+      barre.classList.toggle('cachee', visibles.size > 0);
+    });
+    cibles.forEach((c) => obs.observe(c));
+  }
+</script>
+<style>
+  .barre-mobile { display: none; }
+  @media (max-width: 760px) {
+    .barre-mobile {
+      display: block; position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+      padding: .7rem 1rem calc(.7rem + env(safe-area-inset-bottom, 0px));
+      background: var(--fond-verre); backdrop-filter: blur(8px); border-top: 1px solid var(--ligne);
+      transition: translate .2s ease;
+    }
+    .barre-mobile .bouton { width: 100%; }
+    .barre-mobile.cachee { translate: 0 110%; }
+    :global(body) { padding-bottom: 76px; }
+  }
+</style>
