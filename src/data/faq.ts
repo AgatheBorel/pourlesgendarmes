@@ -21,8 +21,8 @@ export const faq = [
     r: "Gardez-les avec vous : papiers d'identité, dossier de mutation, bijoux, ordinateur, médicaments. Ils ne doivent pas voyager dans le camion.",
   },
   {
-    q: 'Ce site est-il un site officiel de la Gendarmerie ?',
-    r: "Non. Pour les gendarmes est un site d'information indépendant, édité par une entreprise de déménagement. Il n'est ni édité ni validé par la Gendarmerie nationale. Pour toute question sur vos droits, les textes officiels et votre unité font foi.",
+    q: 'Ce site est-il un site officiel de la Gendarmerie ou du ministère des Armées ?',
+    r: "Non. Pour les gendarmes est un site d'information indépendant, édité par une entreprise de déménagement. Il n'est ni édité ni validé par la Gendarmerie nationale ou le ministère des Armées. Pour toute question sur vos droits, les textes officiels et votre unité font foi.",
   },
   {
     q: 'Mes données sont-elles transmises à d’autres entreprises ?',
