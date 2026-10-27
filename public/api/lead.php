@@ -36,7 +36,10 @@ $listes = [
   'pieces'   => ['1', '2', '3', '4', '5+'],
   'creneau'  => ['indifferent', 'matin', 'midi', 'apres-midi', 'soir'],
 ];
-$p = fn(string $k, int $max = 200) => mb_substr(trim(strip_tags((string)($_POST[$k] ?? ''))), 0, $max);
+// Champs d'une ligne : balises retirées, caractères de contrôle (retours à la ligne, tabulations…) remplacés par des espaces.
+$p = fn(string $k, int $max = 200) => mb_substr(trim(preg_replace('/[\x00-\x1F\x7F]+/u', ' ', strip_tags((string)($_POST[$k] ?? '')))), 0, $max);
+// Champ multiligne (message) : seuls les retours à la ligne sont conservés.
+$pTexte = fn(string $k, int $max = 1000) => mb_substr(trim(preg_replace('/[\x00-\x09\x0B-\x1F\x7F]+/u', ' ', strip_tags((string)($_POST[$k] ?? '')))), 0, $max);
 
 $lead = [
   'motif'          => $p('motif'),
@@ -52,7 +55,7 @@ $lead = [
   'telephone'      => $p('telephone', 20),
   'email'          => $p('email', 160),
   'creneau'        => $p('creneau') ?: 'indifferent',
-  'message'        => $p('message', 1000),
+  'message'        => $pTexte('message', 1000),
   'consentement'   => ($_POST['consentement'] ?? '') === 'oui',
 ];
 
