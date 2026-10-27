@@ -3,7 +3,7 @@ import Article from '../layouts/Article.astro';
 import { site } from '../data/site';
 const e = site.editor;
 ---
-<Article title="Données personnelles" h1="Vos données personnelles" maj="23 octobre 2026" noindex>
+<Article title="Données personnelles" h1="Vos données personnelles" maj="27 octobre 2026" noindex>
   <h2>Qui traite vos données</h2>
   <p>Le responsable du traitement des données collectées sur {site.domain} est l’éditeur du site, identifié dans les <a href="/mentions-legales/">mentions légales</a>. Contact : {e.dpoEmail}.</p>
 
@@ -13,7 +13,7 @@ const e = site.editor;
   <p>Nous ne vous demandons aucune information sur votre unité ou votre service, et nous vous invitons à ne pas en indiquer.</p>
 
   <h2>Qui y a accès</h2>
-  <p>Uniquement les équipes de l’éditeur chargées de votre demande, et nos sous-traitants techniques (hébergement du site et messagerie électronique), dans l'Union européenne. Vos données ne sont ni vendues ni cédées.</p>
+  <p>Uniquement les équipes de l’éditeur chargées de votre demande, et nos sous-traitants techniques (hébergement du site et des statistiques, messagerie électronique), dans l'Union européenne. Vos données ne sont ni vendues ni cédées.</p>
 
   <h2>Combien de temps</h2>
   <p>Une copie technique de votre demande est conservée 30 jours sur le serveur du site, puis supprimée automatiquement.</p>
@@ -24,4 +24,31 @@ const e = site.editor;
 
   <h2>Cookies et mesure d'audience</h2>
   <p>Ce site ne dépose aucun cookie publicitaire et n'utilise pas de service tiers pour ses polices de caractères.</p>
+  <p>Pour améliorer le site, nous mesurons sa fréquentation avec l'outil Matomo, hébergé sur nos propres serveurs dans l'Union européenne. Cette mesure ne dépose aucun cookie, l'adresse IP des visiteurs est anonymisée et les statistiques produites sont anonymes. Elle n'est pas croisée avec d'autres traitements ni transmise à des tiers. Les données brutes sont conservées au plus 13 mois. Conformément aux recommandations de la CNIL, cette mesure est dispensée de consentement, mais vous pouvez vous y opposer à tout moment.</p>
+  <p>Si votre navigateur envoie le signal « Ne pas pister » (Do Not Track), aucune mesure n'est effectuée.</p>
+  <div class="opposition">
+    <p id="etat-mesure" aria-live="polite">Vos visites sont actuellement prises en compte dans les statistiques anonymes.</p>
+    <button type="button" class="bouton bouton-secondaire" id="bouton-mesure">Ne plus mesurer mes visites</button>
+  </div>
+  <script is:inline>
+    (function () {
+      var cle = 'plg-mesure-refusee', etat = document.getElementById('etat-mesure'), bouton = document.getElementById('bouton-mesure');
+      function lire() { try { return localStorage.getItem(cle) === '1'; } catch (e) { return false; } }
+      function afficher() {
+        var refus = lire();
+        etat.textContent = refus ? 'Vos visites ne sont plus mesurées sur ce navigateur.' : 'Vos visites sont actuellement prises en compte dans les statistiques anonymes.';
+        bouton.textContent = refus ? 'Accepter à nouveau la mesure de mes visites' : 'Ne plus mesurer mes visites';
+      }
+      bouton.addEventListener('click', function () {
+        try { lire() ? localStorage.removeItem(cle) : localStorage.setItem(cle, '1'); } catch (e) {}
+        afficher();
+      });
+      afficher();
+    })();
+  </script>
 </Article>
+
+<style>
+  .opposition { background: var(--surface); border: 1px solid var(--ligne); border-radius: var(--r); padding: 1rem 1.2rem; margin: 1rem 0; font-family: var(--f-ui); font-size: 1rem; }
+  .opposition p { margin: 0 0 .8rem; }
+</style>

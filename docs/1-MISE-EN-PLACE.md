@@ -60,9 +60,9 @@ Ces valeurs sont chiffrées : personne, pas même vous, ne peut les relire ensui
 Dépôt GitHub > onglet **Actions** > **Publier le site** > **Run workflow**.
 Au bout de deux à trois minutes, une coche verte apparaît : le site est en ligne.
 
-En cas de croix rouge, cliquer dessus pour lire l'erreur. Si l'envoi échoue avec un message de connexion,
-remplacer `protocol: ftps` par `protocol: ftp` dans `.github/workflows/publier.yml` (certaines offres OVH
-n'acceptent pas FTPS), ou demander à votre service informatique.
+En cas de croix rouge, cliquer dessus pour lire l'erreur. La publication utilise SFTP (port 22, connexion chiffrée)
+avec les mêmes identifiants que le FTP. Si la connexion échoue, vérifier le secret `FTP_SERVER` : chez OVH, le serveur
+SFTP est en général `ftp.clusterXXX.hosting.ovh.net` ou `ssh.clusterXXX.hosting.ovh.net`.
 
 ## Étape 6 — Brancher l'interface d'édition (Pages CMS)
 
